@@ -107,6 +107,47 @@ pip install -r requirements.txt</code></pre>
       <pre class="code"><code>python main.py --listen 0.0.0.0 --port 8188</code></pre>
       <p>浏览器访问 <code>http://127.0.0.1:8188/</code>（或你的服务器 IP）。</p>
 
+      <h3 id="online">2.4 在线体验（中国境内）</h3>
+      <div class="cards">
+        <article class="card">
+          <h3>方案 A：国内云 GPU（推荐）</h3>
+          <ul>
+            <li>平台：阿里云、腾讯云、华为云、火山引擎等，优先选择 ≥12–24GB 显存规格。</li>
+            <li>系统：Ubuntu 22.04 + NVIDIA 驱动 + 匹配 CUDA。</li>
+            <li>部署（示例）：</li>
+          </ul>
+          <pre class="code"><code>sudo apt update && sudo apt install -y git python3-venv
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python3 -m venv venv && source venv/bin/activate
+pip install --upgrade pip
+# 按你的 CUDA 版本选择 PyTorch（示例 CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+python main.py --listen 0.0.0.0 --port 8188
+# 在云厂商安全组/防火墙放行 80/443（反代）或 8188 端口</code></pre>
+        </article>
+
+        <article class="card">
+          <h3>方案 B：Notebook / 容器平台</h3>
+          <ul>
+            <li>在支持 GPU 的国内平台创建 Notebook/容器实例。</li>
+            <li>按上面命令拉取并运行，开启“端口映射/临时公网服务”。</li>
+            <li>特点：计时计费、按需开关，适合教学演示与短期使用。</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>方案 C：内网部署 + 远程访问</h3>
+          <ul>
+            <li>在办公室/家中独显主机上部署 ComfyUI。</li>
+            <li>通过 FRP/ZeroTier/内网穿透或 Nginx 反向代理，以 HTTPS 暴露访问。</li>
+            <li>务必启用访问控制与速率限制，保护模型与图片隐私。</li>
+          </ul>
+        </article>
+      </div>
+      <p class="notice">提示：公开在线服务需遵守版权与内容合规；为控制成本可设置“空闲自动关机/释放实例”；建议用域名 + HTTPS 代理至 8188 端口。</p>
+
       <h2 id="ui">3. 界面与节点基础</h2>
       <ul>
         <li><strong>画布（Canvas）</strong>：放置与连接节点的区域，支持拖拽与缩放。</li>
