@@ -35,6 +35,7 @@
         <a href="#troubleshooting" id="troubleshooting">8. 常见问题排查</a>
         <a href="#online-cn" id="online-cn-link">9. 在线部署与体验（中国境内）</a>
         <a href="#runninghub" id="runninghub-link">RunningHub 云平台学习教程</a>
+        <a href="#liblib" id="liblib-link">Liblib.art 云平台学习教程</a>
       </div>
     </aside>
 
@@ -496,6 +497,70 @@ curl -H "Authorization: Bearer &lt;ACCESS_TOKEN&gt;" "&lt;查询地址&gt;?taskI
       </ul>
 
       <p class="notice">更多能力（工作流广场、模型库、API 与计费等）可参考平台页面与文档：<a href="https://www.runninghub.cn/" target="_blank" rel="noopener">RunningHub 官网</a>。</p>
+
+      <h3 id="liblib">9.8 基于 Liblib.art 的云平台学习教程</h3>
+      <p>以下步骤基于 <a href="https://www.liblib.art/" target="_blank" rel="noopener">Liblib.art</a> 整理，目标是无需本地显卡即可在线编辑与运行 ComfyUI 工作流，并可分享/对外提供结果。</p>
+
+      <h4>一、注册与进入工作区</h4>
+      <ol>
+        <li>访问 <a href="https://www.liblib.art/" target="_blank" rel="noopener">Liblib.art</a>，完成注册与登录。</li>
+        <li>从首页导航进入与 ComfyUI 相关的功能入口（如“工作流/工作台/AI 应用”等，以网站当前导航为准）。</li>
+        <li>初学者可先浏览平台示例与社区作品，了解常用节点与工作流结构。</li>
+      </ol>
+
+      <h4>二、创建或导入工作流</h4>
+      <ul>
+        <li><strong>新建：</strong>在工作区新建 ComfyUI 工作流，进入画布编辑。</li>
+        <li><strong>导入：</strong>选择“导入工作流”，上传本地 <code>workflow.json</code> 或粘贴 JSON 内容。</li>
+        <li><strong>复制示例：</strong>在社区/作品广场中挑选模板，一键复制到个人空间后打开编辑。</li>
+      </ul>
+
+      <h4>三、模型与节点</h4>
+      <ul>
+        <li><strong>模型库：</strong>平台内置常用模型与 LoRA，直接在节点/模型面板选择；通常无需自行安装驱动与 CUDA。</li>
+        <li><strong>自有模型：</strong>按平台指引上传到个人空间，并在工作流节点中选择对应路径或名称。</li>
+        <li><strong>节点更新：</strong>若节点报红，优先检查是否使用了未启用的扩展或不兼容版本；复制平台同款示例对照参数可快速排查。</li>
+      </ul>
+
+      <h4>四、编辑与运行</h4>
+      <ol>
+        <li>按教程第 4 节的链路（Load Checkpoint → KSampler → VAE Decode → Save Image 等）搭建或检查连线。</li>
+        <li>设置 Prompt/Negative、Steps、CFG、分辨率与采样器；需要时加入 ControlNet/LoRA 节点。</li>
+        <li>点击“运行/提交”，在队列/日志面板查看状态；运行按平台计费规则计费，结束会话可节省成本。</li>
+        <li>完成后在结果面板预览与下载图片，必要时保存中间结果便于复现。</li>
+      </ol>
+
+      <h4>五、发布与分享</h4>
+      <ol>
+        <li>选择工作流，点击“发布/分享”。</li>
+        <li>为常用输入（Prompt、步数、CFG、分辨率、上传图像等）配置表单并映射到节点参数。</li>
+        <li>设置可见性（私有/公开/团队）与配额限制，生成分享链接用于演示或收集反馈。</li>
+      </ol>
+
+      <h4>六、API 与自动化（如平台开放）</h4>
+      <p>若平台提供 API 调用，一般包括：获取 Token/工作流 ID → 触发运行 → 轮询任务 → 获取结果。以下为通用模板，字段以平台文档为准。</p>
+      <pre class="code"><code>curl -X POST "&lt;API_调用地址&gt;" \
+  -H "Authorization: Bearer &lt;ACCESS_TOKEN&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"workflowId":"&lt;WORKFLOW_ID&gt;","inputs":{"prompt":"sunset city","steps":20,"cfg":7}}'
+
+curl -H "Authorization: Bearer &lt;ACCESS_TOKEN&gt;" "&lt;API_查询地址&gt;?taskId=&lt;TASK_ID&gt;"
+</code></pre>
+
+      <h4>七、费用与配额</h4>
+      <ul>
+        <li>根据算力规格与使用时长计费；在账户/账单处查看用量明细。</li>
+        <li>请在空闲时及时结束会话或释放实例，避免空转。</li>
+      </ul>
+
+      <h4>八、常见问题</h4>
+      <ul>
+        <li><strong>节点报红：</strong>检查模型是否存在/可用、节点版本是否匹配；用社区同款示例对比参数更易定位问题。</li>
+        <li><strong>显存不足：</strong>降低分辨率/批量或采用放大流程；必要时切换到更高显存算力。</li>
+        <li><strong>访问慢/失败：</strong>避开高峰期、分批运行；关注平台的并发/排队机制。</li>
+      </ul>
+
+      <p class="notice">平台入口：<a href="https://www.liblib.art/" target="_blank" rel="noopener">Liblib.art</a>（请以站内导航与文档为准）。</p>
     </article>
   </main>
 
