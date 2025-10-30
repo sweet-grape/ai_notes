@@ -36,6 +36,7 @@
         <a href="#online-cn" id="online-cn-link">9. 在线部署与体验（中国境内）</a>
         <a href="#runninghub" id="runninghub-link">RunningHub 云平台学习教程</a>
         <a href="#liblib" id="liblib-link">Liblib.art 云平台学习教程</a>
+        <a href="#liblib-lora" id="liblib-lora-link">Liblib.art LoRA 训练教程</a>
       </div>
     </aside>
 
@@ -561,6 +562,94 @@ curl -H "Authorization: Bearer &lt;ACCESS_TOKEN&gt;" "&lt;API_查询地址&gt;?t
       </ul>
 
       <p class="notice">平台入口：<a href="https://www.liblib.art/" target="_blank" rel="noopener">Liblib.art</a>（请以站内导航与文档为准）。</p>
+
+      <h3 id="liblib-lora">9.9 Liblib.art 上训练 LoRA（详细教程）</h3>
+      <p>以下流程面向“风格/角色/产品”三类常见 LoRA 训练场景，参数区分给出推荐值；请结合平台的“模型训练”界面逐项对应设置。</p>
+
+      <h4>一、前置准备</h4>
+      <ul>
+        <li>账号与配额：保证有可用算力与存储额度；训练时长按规格计费。</li>
+        <li>数据集：
+          <ul>
+            <li>风格 LoRA：50–200 张，多题材多视角；角色/产品 LoRA：200–800 张，覆盖正脸/侧脸/半身/全身与不同光线。</li>
+            <li>分辨率建议：长边 768–1024，尽量无水印与文字；可先做去噪/裁切。</li>
+            <li>命名与标签：准备唯一触发词（如 <code>sksChar</code>），用于提示词中触发 LoRA。</li>
+          </ul>
+        </li>
+        <li>标注方式：使用平台的自动标注工具（如 WD14/BLIP 等）为图片生成 caption；必要图片手工微调关键词。</li>
+      </ul>
+
+      <h4>二、创建训练任务</h4>
+      <ol>
+        <li>进入 <em>模型训练</em> → 新建 <em>LoRA 训练</em>（名称、描述、触发词）。</li>
+        <li>选择基底模型系列（SD 1.5 / SDXL / Flux 等），与后续推理要用的底模保持一致。</li>
+        <li>选择数据集来源：上传图片与 caption，或选择已整理好的数据集目录。</li>
+      </ol>
+
+      <h4>三、关键参数推荐</h4>
+      <div class="cards">
+        <article class="card">
+          <h3>风格 LoRA（轻量）</h3>
+          <ul>
+            <li>Rank / Alpha：<strong>8–16 / 8–16</strong></li>
+            <li>分辨率：<strong>768</strong>（SDXL 可 1024）</li>
+            <li>学习率：UNet <strong>1e-4</strong>，Text Encoder <strong>1e-5</strong></li>
+            <li>批量：BS 2–4；梯度累积到等效 <strong>16</strong></li>
+            <li>步数：<strong>2k–4k</strong>；保存间隔 500</li>
+            <li>调度器：cosine，warmup 0.05；精度：fp16/bf16</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>角色 LoRA（中等）</h3>
+          <ul>
+            <li>Rank / Alpha：<strong>16–32 / 8–16</strong></li>
+            <li>分辨率：<strong>768</strong>（SDXL 1024）</li>
+            <li>学习率：UNet <strong>1e-4</strong>，Text Encoder <strong>5e-6–1e-5</strong></li>
+            <li>批量：BS 2–4；梯度累积到等效 16–32</li>
+            <li>步数：<strong>3k–8k</strong>；保存间隔 500</li>
+            <li>建议先训 70% 仅 UNet，后 30% 打开 Text Encoder 微调</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>产品/IP LoRA（细节多）</h3>
+          <ul>
+            <li>Rank / Alpha：<strong>32–64 / 16–32</strong></li>
+            <li>分辨率：<strong>896–1024</strong></li>
+            <li>学习率：UNet <strong>5e-5–1e-4</strong>，Text Encoder <strong>5e-6</strong></li>
+            <li>批量：等效 16–32；开启 gradient checkpoint 节省显存</li>
+            <li>步数：<strong>5k–12k</strong>，根据过拟合迹象提前停止</li>
+          </ul>
+        </article>
+      </div>
+      <p class="notice">计算步数参考：<code>有效批量 × 训练步数 ≈ 数据量 × repeats × epoch</code>；优先以“验证效果”而非固定步数为准。</p>
+
+      <h4>四、训练与监控</h4>
+      <ul>
+        <li>启动后关注 loss 曲线、显存占用与日志；过拟合常表现为训练后期图像发糊、细节异常统一。</li>
+        <li>中断可从最近保存步继续；建议每 500–1000 步导出一次以便对比。</li>
+      </ul>
+
+      <h4>五、验证与发布</h4>
+      <ol>
+        <li>训练完成后，在平台“模型库/我的模型”中找到 LoRA；用于推理时直接在 ComfyUI 节点中选择。</li>
+        <li>在 ComfyUI 中的使用：
+          <ul>
+            <li>提示词触发：<code>&lt;lora:你的LoRA名称:0.6–1.0&gt;</code>（或使用 LoRA 注入节点）。</li>
+            <li>权重经验值：风格 0.6–0.8；角色 0.8–1.2；产品 0.7–1.0。</li>
+          </ul>
+        </li>
+        <li>对比不同保存步的效果，选择最佳权重作为“发布版”。</li>
+      </ol>
+
+      <h4>六、常见问题与排错</h4>
+      <ul>
+        <li><strong>不收敛/风格不明显：</strong>增加数据多样性与数量，适当提高 rank 或步数。</li>
+        <li><strong>过拟合（统一脸/纹理）：</strong>降低步数或学习率，加入负面标签，扩大数据多样性。</li>
+        <li><strong>显存不足：</strong>降低分辨率/批量，启用梯度检查点，或选择更高显存规格。</li>
+        <li><strong>结果偏离主题：</strong>固定触发词并在 caption 中前置；清理无关/含文字图片。</li>
+      </ul>
+
+      <p class="notice">更多入口与说明见：<a href="https://www.liblib.art/" target="_blank" rel="noopener">Liblib.art</a>；请以平台训练界面字段为准逐项对应。</p>
     </article>
   </main>
 
