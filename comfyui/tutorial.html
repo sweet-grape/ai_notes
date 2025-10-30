@@ -33,6 +33,7 @@
         <a href="#optimize">6. 性能优化建议</a>
         <a href="#export">7. 工作流的保存与分享</a>
         <a href="#troubleshooting" id="troubleshooting">8. 常见问题排查</a>
+        <a href="#online-cn" id="online-cn-link">9. 在线部署与体验（中国境内）</a>
       </div>
     </aside>
 
@@ -259,6 +260,161 @@ KSampler → VAE Decode → Save Image</code></pre>
           <li>重启 ComfyUI 或点击 UI 刷新列表</li>
         </ul>
       </details>
+
+      <h2 id="online-cn">9. 在线部署与体验（中国境内）</h2>
+      <p class="lead">面向中国境内用户提供可落地的在线访问方案，包括国内云 GPU、Docker/Notebook 平台与内网部署穿透，以及安全加固与运维要点。</p>
+
+      <h3>9.1 方案选择速览</h3>
+      <div class="cards">
+        <article class="card">
+          <h3>国内云 GPU（推荐）</h3>
+          <ul>
+            <li>优点：弹性计费、带宽稳定、备案域名可用、维护省心</li>
+            <li>建议：选择 ≥12–24GB 显存（如 L4/4090/A10/3090）</li>
+            <li>适用：对外演示、团队协作、长期稳定服务</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Docker / Notebook 平台</h3>
+          <ul>
+            <li>优点：即开即用、镜像封装、便于教学与短期实验</li>
+            <li>建议：开启端口映射或临时公网访问，挂载数据盘</li>
+            <li>适用：课堂演示、临时项目、多人共享算力</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>内网部署 + 穿透</h3>
+          <ul>
+            <li>优点：本地显卡零成本复用、可离线</li>
+            <li>建议：使用 FRP/ZeroTier/反向代理并启用鉴权与限速</li>
+            <li>适用：个人/小组内部访问，对公网稳定性要求不高</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>9.2 国内云 GPU 部署（生产推荐）</h3>
+      <ol>
+        <li><strong>创建实例</strong>：选择带 NVIDIA 显卡的镜像（或厂商提供的深度学习镜像）。显存 ≥12GB 为佳。</li>
+        <li><strong>放行端口</strong>：安全组开放 22、80、443（用于反向代理与证书），可选开放 8188（直连）。</li>
+        <li><strong>安装依赖并部署</strong>（Ubuntu 22.04 示例）：</li>
+      </ol>
+      <pre class="code"><code>sudo apt update && sudo apt install -y git python3-venv nginx apache2-utils
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python3 -m venv venv && source venv/bin/activate
+pip install --upgrade pip
+# 按 CUDA 版本选择 PyTorch（示例 CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+nohup python main.py --listen 127.0.0.1 --port 8188 & disown
+</code></pre>
+      <p>说明：服务仅监听 127.0.0.1，由 Nginx 反代对外暴露，便于加密与鉴权。</p>
+
+      <h4>为域名配置 Nginx 反向代理 + 基本认证</h4>
+      <pre class="code"><code># 创建访问账户（可多次新增）
+sudo htpasswd -c /etc/nginx/.htpasswd admin
+
+sudo tee /etc/nginx/sites-available/comfyui &>/dev/null &lt;&lt;'CONF'
+server {
+  listen 80;
+  server_name comfy.example.com;  # 改为你的域名
+
+  location / {
+    proxy_pass http://127.0.0.1:8188;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    auth_basic "Restricted";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    # 简单限速（可选）
+    limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
+    limit_req zone=one burst=10 nodelay;
+  }
+}
+CONF
+
+sudo ln -s /etc/nginx/sites-available/comfyui /etc/nginx/sites-enabled/comfyui
+sudo nginx -t && sudo systemctl reload nginx
+</code></pre>
+      <p class="notice">HTTPS：可用证书管理服务或 <code>acme.sh</code> 一键申请并将上面 server 块改为 443，强烈建议启用。</p>
+
+      <h3>9.3 Docker / Notebook 快速方案</h3>
+      <p>若平台提供 GPU Notebook/容器，可直接按下述命令启动（Ubuntu + NVIDIA Container Toolkit 示例）。</p>
+      <pre class="code"><code># 安装 Docker 与 NVIDIA 容器支持
+curl -fsSL https://get.docker.com | sudo sh
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+  sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+  sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+sudo apt update && sudo apt install -y nvidia-container-toolkit && sudo systemctl restart docker
+
+# 以 CUDA 运行时镜像启动容器并内部部署 ComfyUI（简化示例）
+docker run --gpus all -d --name comfyui -p 8188:8188 \
+  -v /data/comfyui:/workspace \
+  nvidia/cuda:12.1.1-cudnn-runtime-ubuntu22.04 bash -lc '
+    apt update && apt install -y git python3-venv && \
+    cd /workspace && git clone https://github.com/comfyanonymous/ComfyUI.git && \
+    cd ComfyUI && python3 -m venv venv && . venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 && \
+    pip install -r requirements.txt && \
+    python main.py --listen 0.0.0.0 --port 8188'
+</code></pre>
+      <p class="notice">如平台自带“临时公网/端口映射”，将 8188 映射出去即可；或同 9.2 用 Nginx 做 80/443 反代与鉴权。</p>
+
+      <h3>9.4 内网部署 + 穿透（FRP 示例）</h3>
+      <p>准备一台具有公网 IP 的轻量服务器部署 frps，本地显卡主机运行 frpc，将内网 8188 暴露为域名访问。</p>
+      <pre class="code"><code># 在公网服务器安装 frps（以二进制包为例）
+wget https://github.com/fatedier/frp/releases/download/v0.58.0/frp_0.58.0_linux_amd64.tar.gz
+tar xf frp_0.58.0_linux_amd64.tar.gz && cd frp_0.58.0_linux_amd64
+cat &gt; frps.ini &lt;&lt;EOF
+[common]
+bind_port = 7000
+vhost_http_port = 80
+vhost_https_port = 443
+EOF
+./frps -c frps.ini
+
+# 本地显卡主机（Windows/Linux）创建 frpc.ini
+[common]
+server_addr = 公网服务器IP
+server_port = 7000
+[comfyui]
+type = http
+local_port = 8188
+custom_domains = comfy.yourdomain.com
+
+# 启动 frpc 后，用域名访问；可再配 Nginx/HTTPS 与基本认证
+</code></pre>
+
+      <h3>9.5 作为系统服务运行（systemd）</h3>
+      <pre class="code"><code>sudo tee /etc/systemd/system/comfyui.service &>/dev/null &lt;&lt;'UNIT'
+[Unit]
+Description=ComfyUI Service
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/ComfyUI
+ExecStart=/opt/ComfyUI/venv/bin/python main.py --listen 127.0.0.1 --port 8188
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+sudo systemctl daemon-reload
+sudo systemctl enable --now comfyui
+</code></pre>
+
+      <h3>9.6 安全与运维清单</h3>
+      <ul>
+        <li>避免直连 8188，对外统一走 Nginx 443，启用 HTTPS 与基本认证。</li>
+        <li>限制上传与并发、开启限速；必要时加 WAF/防火墙白名单。</li>
+        <li>模型与生成内容合规：注意版权、人物肖像与敏感内容过滤。</li>
+        <li>成本控制：空闲自动关机/释放实例，定时同步模型至对象存储。</li>
+        <li>监控：<code>nvidia-smi -l</code> 观察显存/功耗，日志保存在运行目录。</li>
+      </ul>
     </article>
   </main>
 
