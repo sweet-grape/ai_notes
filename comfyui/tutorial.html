@@ -56,6 +56,41 @@
         <li>Git：用于拉取仓库与更新</li>
         <li>GPU（推荐）：NVIDIA 显卡 + 合适的 CUDA 驱动</li>
       </ul>
+      <h4>2.1.1 电脑配置推荐（保证良好体验）</h4>
+      <div class="cards" style="margin-top:12px">
+        <article class="card">
+          <h3>入门可用（1080p 起步）</h3>
+          <ul>
+            <li>GPU：RTX 3060 12GB 或 RTX 4060 8GB</li>
+            <li>CPU：6 核以上（Intel i5-12400/AMD 5600 及以上）</li>
+            <li>内存：16GB</li>
+            <li>硬盘：NVMe SSD ≥ 1TB（模型/缓存更快）</li>
+            <li>适用：768～1024 分辨率，基础文生图/图生图</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>甜点畅玩（更流畅）</h3>
+          <ul>
+            <li>GPU：RTX 4070 12GB 或 RTX 4070 Super</li>
+            <li>CPU：8 核以上（Intel i7-12700/AMD 7700 及以上）</li>
+            <li>内存：32GB</li>
+            <li>硬盘：NVMe SSD 1–2TB</li>
+            <li>适用：1024～1536 分辨率，ControlNet/LoRA 多组合</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>高阶创作（大图/多模型）</h3>
+          <ul>
+            <li>GPU：RTX 4080(S) 16GB 或 RTX 4090 24GB</li>
+            <li>CPU：高频 8–16 核（Intel i7/i9 13 代或 Ryzen 7/9 新款）</li>
+            <li>内存：64GB（多任务/大型工作流更稳）</li>
+            <li>硬盘：NVMe SSD 2TB+（建议独立“模型盘”）</li>
+            <li>适用：2K 以上分辨率、放大精修、批量生成与视频插件</li>
+          </ul>
+        </article>
+      </div>
+      <p class="notice">显存是影响体验的关键：<strong>≥12GB</strong> 可较为从容地运行 1024 分辨率和常用 ControlNet；若显存吃紧，可降低分辨率/批量或改用放大流程。</p>
+      <p class="notice">移动端建议优先选配带独显（如 4070/4080）的游戏本，并确保电源模式为性能优先；Apple Silicon 可通过 WebUI/Apple ML 方案体验基础功能（速度较慢）。</p>
       <h3>2.2 获取代码与依赖</h3>
       <pre class="code"><code>git clone https://github.com/comfyanonymous/ComfyUI.git
 cd ComfyUI
