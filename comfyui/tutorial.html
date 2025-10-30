@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComfyUI 学习教程</title>
+  <meta name="description" content="从零上手 ComfyUI 的完整学习教程与实战工作流" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">ComfyUI 学习站</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./tutorial.html" class="nav-link active">学习教程</a>
+        <a href="./cases.html" class="nav-link">案例展示</a>
+        <a href="https://github.com/comfyanonymous/ComfyUI" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container with-sidebar">
+    <aside class="sidebar">
+      <div class="toc">
+        <div class="toc-title">目录</div>
+        <a href="#intro">1. 认识 ComfyUI</a>
+        <a href="#install" id="install">2. 安装与启动</a>
+        <a href="#ui">3. 界面与节点基础</a>
+        <a href="#workflows" id="workflows">4. 核心工作流实战</a>
+        <a href="#models">5. 模型管理与放置路径</a>
+        <a href="#optimize">6. 性能优化建议</a>
+        <a href="#export">7. 工作流的保存与分享</a>
+        <a href="#troubleshooting" id="troubleshooting">8. 常见问题排查</a>
+      </div>
+    </aside>
+
+    <article class="doc">
+      <h1>ComfyUI 学习教程</h1>
+      <p class="lead">本教程面向初学者与进阶用户，覆盖安装配置、界面与节点基础、文生图/图生图/ControlNet/LoRA 等核心工作流，以及性能优化与常见问题排查。</p>
+
+      <h2 id="intro">1. 认识 ComfyUI</h2>
+      <p>ComfyUI 是一个<strong>节点式</strong>的可视化 AI 工作流工具。与传统一键式 UI 不同，ComfyUI 通过将推理流程拆解为节点并以连线的方式组合，带来高度的灵活性与可复用性。</p>
+      <ul>
+        <li><strong>可视化流程</strong>：所见即所得，方便调试与复用。</li>
+        <li><strong>高度可扩展</strong>：支持自定义节点与各类插件。</li>
+        <li><strong>精细控制</strong>：对采样、引导、VAE、LoRA、ControlNet 等细节可逐一调参。</li>
+      </ul>
+
+      <h2 id="install">2. 安装与启动</h2>
+      <h3>2.1 环境准备</h3>
+      <ul>
+        <li>操作系统：Windows 10/11（推荐）、Linux、macOS</li>
+        <li>Python：3.10 或 3.11</li>
+        <li>Git：用于拉取仓库与更新</li>
+        <li>GPU（推荐）：NVIDIA 显卡 + 合适的 CUDA 驱动</li>
+      </ul>
+      <h3>2.2 获取代码与依赖</h3>
+      <pre class="code"><code>git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python -m venv venv
+venv\Scripts\activate   # Windows；Linux/macOS 使用: source venv/bin/activate
+pip install --upgrade pip
+# 按你的 CUDA 版本安装 PyTorch（以下示例为 CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt</code></pre>
+      <p>若无独显或仅测试环境，可安装 CPU 版 PyTorch（速度较慢）：</p>
+      <pre class="code"><code>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu</code></pre>
+
+      <h3>2.3 启动服务</h3>
+      <pre class="code"><code>python main.py --listen 0.0.0.0 --port 8188</code></pre>
+      <p>浏览器访问 <code>http://127.0.0.1:8188/</code>（或你的服务器 IP）。</p>
+
+      <h2 id="ui">3. 界面与节点基础</h2>
+      <ul>
+        <li><strong>画布（Canvas）</strong>：放置与连接节点的区域，支持拖拽与缩放。</li>
+        <li><strong>节点搜索</strong>：双击画布或空格键，快速创建所需节点。</li>
+        <li><strong>侧边栏</strong>：队列、历史记录、性能统计、系统日志等。</li>
+        <li><strong>参数面板</strong>：选中节点后在右侧栏调参。</li>
+      </ul>
+      <p><strong>常用节点速览</strong>：</p>
+      <ul>
+        <li>模型相关：Load Checkpoint、VAE Encode/Decode、CLIP Text Encode</li>
+        <li>采样相关：KSampler（选择采样器、步数、CFG 等）</li>
+        <li>图像 I/O：Load Image、Save Image</li>
+        <li>控制相关：Load ControlNet Model、Apply ControlNet</li>
+      </ul>
+
+      <h2 id="workflows">4. 核心工作流实战</h2>
+      <h3>4.1 文生图（Text-to-Image）</h3>
+      <ol>
+        <li>添加 <em>Load Checkpoint</em>（选择主模型）</li>
+        <li>添加 <em>CLIP Text Encode</em> 两个节点：Prompt 与 Negative Prompt</li>
+        <li>添加 <em>Empty Latent Image</em>（设置分辨率，如 1024×1024）</li>
+        <li>添加 <em>KSampler</em>（采样器、步数、CFG、种子）</li>
+        <li>添加 <em>VAE Decode</em> 与 <em>Save Image</em></li>
+      </ol>
+      <p><strong>连接关系（简化）</strong>：</p>
+      <pre class="code"><code>Load Checkpoint → KSampler（model、vae、clip）
+CLIP Text Encode（正） → KSampler positive
+CLIP Text Encode（负） → KSampler negative
+Empty Latent Image → KSampler latent
+KSampler → VAE Decode → Save Image</code></pre>
+
+      <h3>4.2 图生图（Image-to-Image）</h3>
+      <ol>
+        <li><em>Load Image</em> → <em>VAE Encode</em> 获取 latent</li>
+        <li>与 4.1 类似连接到 <em>KSampler</em>，但 latent 输入来自 <em>VAE Encode</em></li>
+        <li>采样强度可通过步数、噪声、去噪强度等控制</li>
+      </ol>
+
+      <h3>4.3 ControlNet（结构/姿态/边缘约束）</h3>
+      <ol>
+        <li>添加 <em>Load ControlNet Model</em>（选择相应的 control 模型）</li>
+        <li>添加预处理（如 Canny、OpenPose 等，部分需扩展节点）并输出提示图</li>
+        <li><em>Apply ControlNet</em> 将控制条件接入 <em>KSampler</em></li>
+      </ol>
+      <p>建议从 Canny/Lineart 入手，权重从 0.8 降到 0.4 寻找平衡。</p>
+
+      <h3>4.4 LoRA（风格/角色注入）</h3>
+      <ol>
+        <li>将 LoRA 模型放到 <code>models/loras</code></li>
+        <li>使用 <em>CLIP Text Encode</em> 的提示词中添加 <code>&lt;lora:名称:权重&gt;</code></li>
+        <li>或使用相应的 LoRA 注入节点（部分为扩展节点）</li>
+      </ol>
+
+      <h3>4.5 放大与精修（Upscale & Refine）</h3>
+      <ul>
+        <li>基础放大：<em>Upscale</em> 节点（选择算法：ESRGAN/BSRGAN/Nearest 等）</li>
+        <li>高分修复：先放大后再进 <em>VAE Encode → KSampler → VAE Decode</em> 做细化</li>
+        <li>面部修复：GFPGAN/CodeFormer（通常作为扩展节点）</li>
+      </ul>
+
+      <h2 id="models">5. 模型管理与放置路径</h2>
+      <ul>
+        <li>主模型（.safetensors/.ckpt）：<code>models/checkpoints</code></li>
+        <li>VAE：<code>models/vae</code></li>
+        <li>LoRA：<code>models/loras</code></li>
+        <li>ControlNet：<code>models/controlnet</code></li>
+        <li>嵌入/文本反演（Textual Inversion）：<code>embeddings</code></li>
+      </ul>
+      <p>放置完毕后在 UI 中点刷新（或重启）以识别新模型。</p>
+
+      <h2 id="optimize">6. 性能优化建议</h2>
+      <ul>
+        <li>优先使用与显卡驱动匹配的 CUDA + PyTorch 版本</li>
+        <li>分辨率从 768 或 1024 起步，逐步提升，结合放大流程</li>
+        <li>采样步数常用 20–30，CFG 6–8 起步，按风格微调</li>
+        <li>显存吃紧可降低 batch、分辨率，或启用 xformers/半精度</li>
+        <li>固定随机种子以复现结果；探索时使用 -1 随机</li>
+      </ul>
+
+      <h2 id="export">7. 工作流的保存与分享</h2>
+      <ul>
+        <li>右上角导出/保存 <code>workflow.json</code></li>
+        <li>他人可通过导入 JSON 快速复现你的流程</li>
+        <li>截图画布并附上主要参数，有助于协作讨论</li>
+      </ul>
+
+      <h2 id="troubleshooting">8. 常见问题排查</h2>
+      <details>
+        <summary>8.1 启动后网页打不开</summary>
+        <ul>
+          <li>确认控制台无报错，端口 8188 未被占用</li>
+          <li>尝试 <code>http://127.0.0.1:8188/</code> 或关闭代理软件</li>
+          <li>服务器部署需放行防火墙端口或经反向代理暴露</li>
+        </ul>
+      </details>
+      <details>
+        <summary>8.2 无法识别 GPU / 加速无效</summary>
+        <ul>
+          <li>确认安装了 <strong>匹配 CUDA 版本</strong> 的 PyTorch（官网选择器）</li>
+          <li>更新显卡驱动，检查 <code>nvidia-smi</code> 是否正常</li>
+          <li>若仍失败，先用 CPU 版验证环境，再回退/更换 CUDA 版本</li>
+        </ul>
+      </details>
+      <details>
+        <summary>8.3 模型未显示或加载失败</summary>
+        <ul>
+          <li>确认放置在正确目录（见第 5 节）</li>
+          <li>模型文件损坏可对比哈希或重新下载</li>
+          <li>重启 ComfyUI 或点击 UI 刷新列表</li>
+        </ul>
+      </details>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 ComfyUI 学习站</span>
+      <span class="sep">·</span>
+      <a href="./index.html">首页</a>
+      <span class="sep">·</span>
+      <a href="./cases.html">案例展示</a>
+    </div>
+  </footer>
+
+  <script src="./main.js"></script>
+</body>
+</html>
+
+

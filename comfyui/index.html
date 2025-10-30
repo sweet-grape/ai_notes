@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComfyUI 学习站</title>
+  <meta name="description" content="ComfyUI 学习教程、文档与案例展示" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">ComfyUI 学习站</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link active">首页</a>
+        <a href="./tutorial.html" class="nav-link">学习教程</a>
+        <a href="./cases.html" class="nav-link">案例展示</a>
+        <a href="https://github.com/comfyanonymous/ComfyUI" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>用 ComfyUI 构建你的可视化 AI 工作流</h1>
+      <p class="subtitle">从零上手 · 节点思维 · 可复用工作流 · 高效推理</p>
+      <div class="cta">
+        <a class="btn primary" href="./tutorial.html">开始学习</a>
+        <a class="btn" href="./cases.html">查看案例</a>
+      </div>
+    </section>
+
+    <section class="grid-3 features">
+      <article class="card">
+        <h3>系统入门</h3>
+        <p>安装配置、界面结构、节点基础、工作流导入导出，全流程讲解。</p>
+        <a href="./tutorial.html#install" class="link">立即安装 →</a>
+      </article>
+      <article class="card">
+        <h3>核心实战</h3>
+        <p>文生图、图生图、ControlNet、LoRA、放大与精修，覆盖主流场景。</p>
+        <a href="./tutorial.html#workflows" class="link">快速上手 →</a>
+      </article>
+      <article class="card">
+        <h3>优化与排错</h3>
+        <p>性能调优、显存策略、参数建议、常见报错定位与修复清单。</p>
+        <a href="./tutorial.html#troubleshooting" class="link">查看建议 →</a>
+      </article>
+    </section>
+
+    <section class="quick-start">
+      <h2>快速开始</h2>
+      <ol>
+        <li>安装 Python 3.10/3.11 与 Git</li>
+        <li>克隆 ComfyUI 并安装依赖</li>
+        <li>准备模型文件（checkpoints、vae、loras 等）</li>
+        <li>启动服务并访问 8188 端口</li>
+      </ol>
+      <pre class="code"><code>git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python -m venv venv
+venv\Scripts\activate   # Windows
+pip install --upgrade pip
+# 根据你的 CUDA 版本安装 PyTorch（示例：CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+python main.py --listen 0.0.0.0 --port 8188</code></pre>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <h3>模型放哪里？</h3>
+        <ul>
+          <li>主模型：models/checkpoints</li>
+          <li>VAE：models/vae</li>
+          <li>LoRA：models/loras</li>
+          <li>ControlNet：models/controlnet</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>打不开网页？</h3>
+        <p>确认控制台无报错，端口未被占用，或尝试访问：http://127.0.0.1:8188/</p>
+      </article>
+      <article class="card">
+        <h3>没有 GPU？</h3>
+        <p>可以安装 CPU 版 PyTorch 体验基础功能，但速度较慢。</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 ComfyUI 学习站</span>
+      <span class="sep">·</span>
+      <a href="./tutorial.html">学习教程</a>
+      <span class="sep">·</span>
+      <a href="./cases.html">案例展示</a>
+    </div>
+  </footer>
+
+  <script src="./main.js"></script>
+</body>
+</html>
+
+
