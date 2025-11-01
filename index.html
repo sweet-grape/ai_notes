@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ComfyUI 学习站</title>
-  <meta name="description" content="ComfyUI 学习教程、文档与案例展示" />
+  <title>AI 学习中心</title>
+  <meta name="description" content="AI 学习中心：ComfyUI、SD/Wan 等多模块教程与资料导航" />
   <link rel="stylesheet" href="./comfyui/style.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="./">ComfyUI 学习站</a>
+      <a class="brand" href="./">AI 学习中心</a>
       <nav class="nav" id="topNav">
         <a href="./" class="nav-link active">首页</a>
-        <a href="./comfyui/tutorial.html" class="nav-link">学习教程</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
         <a href="./comfyui/cases.html" class="nav-link">案例展示</a>
         <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
         <a href="https://github.com/comfyanonymous/ComfyUI" class="nav-link" target="_blank" rel="noopener">GitHub</a>
@@ -24,49 +24,39 @@
 
   <main class="container">
     <section class="hero">
-      <h1>用 ComfyUI 构建你的可视化 AI 工作流</h1>
-      <p class="subtitle">从零上手 · 节点思维 · 可复用工作流 · 高效推理</p>
+      <h1>AI 学习中心</h1>
+      <p class="subtitle">ComfyUI · SD/Wan · 在线部署 · LoRA · ControlNet · i2v 视频</p>
       <div class="cta">
-        <a class="btn primary" href="./comfyui/tutorial.html">开始学习</a>
-        <a class="btn" href="./comfyui/cases.html">查看案例</a>
+        <a class="btn primary" href="./comfyui/tutorial.html">进入 ComfyUI 教程</a>
+        <a class="btn" href="./sdwan/tutorial.html">进入 SD/Wan 教程</a>
       </div>
     </section>
 
     <section class="grid-3 features">
       <article class="card">
-        <h3>系统入门</h3>
-        <p>安装配置、界面结构、节点基础、工作流导入导出，全流程讲解。</p>
-        <a href="./comfyui/tutorial.html#install" class="link">立即安装 →</a>
+        <h3>ComfyUI 快速上手</h3>
+        <p>安装、节点基础、文生图/图生图、ControlNet、LoRA、案例。</p>
+        <a href="./comfyui/tutorial.html#install" class="link">查看 →</a>
       </article>
       <article class="card">
-        <h3>核心实战</h3>
-        <p>文生图、图生图、ControlNet、LoRA、放大与精修，覆盖主流场景。</p>
-        <a href="./comfyui/tutorial.html#workflows" class="link">快速上手 →</a>
+        <h3>SD/Wan 零基础</h3>
+        <p>SDXL/SD3.5 与 Wan2 的参数心法、提示词模板与常见场景。</p>
+        <a href="./sdwan/tutorial.html" class="link">查看 →</a>
       </article>
       <article class="card">
-        <h3>优化与排错</h3>
-        <p>性能调优、显存策略、参数建议、常见报错定位与修复清单。</p>
-        <a href="./comfyui/tutorial.html#troubleshooting" class="link">查看建议 →</a>
+        <h3>更多模块（即将上线）</h3>
+        <p>Flux、视频生成、部署与运维、模型训练等持续扩展。</p>
+        <a class="link" href="./README.md">规划路线 →</a>
       </article>
     </section>
 
     <section class="quick-start">
-      <h2>快速开始</h2>
+      <h2>快速导航</h2>
       <ol>
-        <li>安装 Python 3.10/3.11 与 Git</li>
-        <li>克隆 ComfyUI 并安装依赖</li>
-        <li>准备模型文件（checkpoints、vae、loras 等）</li>
-        <li>启动服务并访问 8188 端口</li>
+        <li>本地使用：按 <a href="./comfyui/tutorial.html#install">ComfyUI 安装引导</a> 启动本地环境。</li>
+        <li>在线体验：参考 <a href="./comfyui/tutorial.html#online-cn">国内在线部署</a> 或平台指南（RunningHub / Liblib）。</li>
+        <li>基础学习：从 <a href="./sdwan/tutorial.html#prompts">提示词模板</a> 与 <a href="./sdwan/tutorial.html#params">参数心法</a> 开始。</li>
       </ol>
-      <pre class="code"><code>git clone https://github.com/comfyanonymous/ComfyUI.git
-cd ComfyUI
-python -m venv venv
-venv\Scripts\activate   # Windows
-pip install --upgrade pip
-# 根据你的 CUDA 版本安装 PyTorch（示例：CUDA 12.1）
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install -r requirements.txt
-python main.py --listen 0.0.0.0 --port 8188</code></pre>
     </section>
 
     <section class="cards">
@@ -92,11 +82,11 @@ python main.py --listen 0.0.0.0 --port 8188</code></pre>
 
   <footer class="site-footer">
     <div class="container">
-      <span>© 2025 ComfyUI 学习站</span>
+      <span>© 2025 AI 学习中心</span>
       <span class="sep">·</span>
-      <a href="./comfyui/tutorial.html">学习教程</a>
+      <a href="./comfyui/tutorial.html">ComfyUI 教程</a>
       <span class="sep">·</span>
-      <a href="./comfyui/cases.html">案例展示</a>
+      <a href="./sdwan/tutorial.html">SD/Wan 教程</a>
     </div>
   </footer>
 
