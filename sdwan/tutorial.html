@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SD/Wan 零基础学习教程</title>
+  <meta name="description" content="从零开始掌握 Stable Diffusion（SDXL/SD3.5）与 Wan2：安装、参数、提示词、图生图、ControlNet、LoRA、i2v 视频与优化。" />
+  <link rel="stylesheet" href="../comfyui/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">SD/Wan 学习站</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./tutorial.html" class="nav-link active">学习教程</a>
+        <a href="../comfyui/index.html" class="nav-link">ComfyUI</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container with-sidebar">
+    <aside class="sidebar">
+      <div class="toc">
+        <div class="toc-title">目录</div>
+        <a href="#intro">1. 认识 SD 与 Wan</a>
+        <a href="#install">2. 快速开始（本地/在线）</a>
+        <a href="#params">3. 核心参数速通</a>
+        <a href="#prompts">4. 提示词模板（中/英）</a>
+        <a href="#workflows">5. 常见任务（文生图/图生图/修补）</a>
+        <a href="#controlnet">6. ControlNet 与参考图</a>
+        <a href="#lora">7. LoRA 使用与训练要点</a>
+        <a href="#i2v">8. i2v 视频（wan2.1）</a>
+        <a href="#models">9. 模型下载与放置</a>
+        <a href="#optimize">10. 性能与质量优化</a>
+        <a href="#faq">11. 常见问题</a>
+      </div>
+    </aside>
+
+    <article class="doc">
+      <h1>SD/Wan 零基础学习教程</h1>
+      <p class="lead">本教程以“上手快、可复制”为目标，统一用 ComfyUI 演示 SDXL/SD3.5 与 Wan2 的常见工作流。你可以边看边在本站的 ComfyUI 教程中复用节点与参数。</p>
+
+      <h2 id="intro">1. 认识 SD 与 Wan</h2>
+      <ul>
+        <li><strong>SDXL/SD3.5：</strong>写实与可控性强，适合产品、人像、复杂光影；对英文提示更稳定。</li>
+        <li><strong>Wan2：</strong>中文理解友好、默认审美讨喜，国风/插画/商业海报出片快。</li>
+        <li>推荐：写实严谨选 SD3.5；中文顺手和高观感选 Wan2；两者均可在 ComfyUI 中统一流程。</li>
+      </ul>
+
+      <h2 id="install">2. 快速开始（本地/在线）</h2>
+      <h3>2.1 本地（与 ComfyUI 配套）</h3>
+      <pre class="code"><code>git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python -m venv venv
+venv\Scripts\activate   # Windows；Linux/macOS: source venv/bin/activate
+pip install --upgrade pip
+# 选择与你 GPU 匹配的 PyTorch（示例 CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+python main.py --listen 0.0.0.0 --port 8188</code></pre>
+      <p>浏览器访问 <code>http://127.0.0.1:8188/</code>，按本页后续章节搭建工作流。</p>
+
+      <h3>2.2 在线</h3>
+      <ul>
+        <li>国内云 GPU / Notebook：参考本站“在线部署与体验（中国境内）”。</li>
+        <li>平台教程：<a href="../comfyui/tutorial.html#runninghub">RunningHub</a>、
+          <a href="../comfyui/tutorial.html#liblib">Liblib.art</a>。</li>
+      </ul>
+
+      <h2 id="params">3. 核心参数速通</h2>
+      <ul>
+        <li><strong>分辨率：</strong>1024×1024 起步；横版 1024×576；先小后大配合放大器。</li>
+        <li><strong>Steps：</strong>SD3.5 20–30；Wan2 16–24。</li>
+        <li><strong>CFG：</strong>SD3.5 5–7；Wan2 4–6。</li>
+        <li><strong>采样器：</strong>dpmpp_sde_karras 起步；保持一致有助复现。</li>
+        <li><strong>Seed：</strong>先固定做 A/B 对比，再放开探索。</li>
+      </ul>
+
+      <h2 id="prompts">4. 提示词模板（中/英）</h2>
+      <h3>4.1 中文模板（Wan 友好）</h3>
+      <pre class="code"><code>主题 + 场景/环境 + 构图/镜头 + 光线 + 风格/材质 + 颜色氛围 + 细节控制
+例：近景人像，微风拂面，镜头缓慢推近，日落金色侧光，电影感，肤质细腻，背景干净
+负面：低清，模糊，畸变，文字/水印，压缩残留</code></pre>
+      <h3>4.2 英文模板（SD 稳）</h3>
+      <pre class="code"><code>close-up portrait of an Asian woman, soft rim light, cinematic film look,
+shallow depth of field, detailed skin texture, clean background
+negative: lowres, blurry, artifacts, extra fingers, watermark, text</code></pre>
+
+      <h2 id="workflows">5. 常见任务（文生图/图生图/修补）</h2>
+      <ol>
+        <li><strong>文生图：</strong>Load Checkpoint → CLIP Text Encode（正/负）→ Empty Latent → KSampler → VAE Decode → Save Image</li>
+        <li><strong>图生图：</strong>Load Image → VAE Encode → KSampler（调 denoise 0.3–0.6）→ VAE Decode → Save Image</li>
+        <li><strong>修补（Inpaint）：</strong>图片+掩码 → Inpaint 流程（仅重绘遮罩区域）</li>
+      </ol>
+
+      <h2 id="controlnet">6. ControlNet 与参考图</h2>
+      <ul>
+        <li>OpenPose：固定姿态/动作（人像与格斗动作稳定器）。</li>
+        <li>Canny/Lineart：锁定外形轮廓（产品/瓶子/logo 轮廓）。</li>
+        <li>Depth：保持空间与机位感。</li>
+        <li>IP-Adapter：参考图/风格锁定（配权重 0.6–0.8）。</li>
+      </ul>
+
+      <h2 id="lora">7. LoRA 使用与训练要点</h2>
+      <ul>
+        <li>使用：提示词 &lt;lora:名称:0.6–1.0&gt; 或 LoRA 注入节点；风格 0.6–0.8，角色 0.8–1.2。</li>
+        <li>训练：见本站“Liblib.art LoRA 训练教程”。</li>
+      </ul>
+
+      <h2 id="i2v">8. i2v 视频（wan2.1）</h2>
+      <ul>
+        <li>分辨率：1024×576 或 1024×1024；帧数 48–64；FPS 12–16。</li>
+        <li>Steps 24，CFG 5；motion 0.4–0.55；denoise 0.5–0.6；固定所有种子（含 temporal）。</li>
+        <li>不稳时叠 Pose/Lineart/Depth 其一；能量球/拖尾用粒子与 glow 词加强。</li>
+      </ul>
+
+      <h2 id="models">9. 模型下载与放置</h2>
+      <ul>
+        <li>SDXL/SD3.5/Wan2 主模型：放到 models/checkpoints</li>
+        <li>VAE：models/vae；LoRA：models/loras；ControlNet：models/controlnet</li>
+        <li>放置后在 ComfyUI 中刷新或重启识别。</li>
+      </ul>
+
+      <h2 id="optimize">10. 性能与质量优化</h2>
+      <ul>
+        <li>显存优先：≥12GB 体验更稳；显存吃紧降分辨率/批量，启用 fp16/xformers。</li>
+        <li>清晰路线：先 768/1024 生成 → 放大（ESRGAN/4x-UltraSharp）→ 轻修复。</li>
+        <li>可复现：固定采样器与种子，保存参数快照。</li>
+      </ul>
+
+      <h2 id="faq">11. 常见问题</h2>
+      <details>
+        <summary>结果不稳定/同词差异大</summary>
+        <ul>
+          <li>未锁定种子（含 temporal/motion）；运动或 denoise 过高；版本差异。</li>
+          <li>对策：锁种子与调度；降 motion/denoise；加 Pose/Lineart 约束。</li>
+        </ul>
+      </details>
+      <details>
+        <summary>人像皮肤或手指异常</summary>
+        <ul>
+          <li>负面词补充 + 轻度面修；降低 denoise；步骤+3；换更稳的底模。</li>
+        </ul>
+      </details>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 SD/Wan 学习站</span>
+      <span class="sep">·</span>
+      <a href="./index.html">首页</a>
+      <span class="sep">·</span>
+      <a href="../comfyui/index.html">ComfyUI</a>
+    </div>
+  </footer>
+
+  <script src="../comfyui/main.js"></script>
+</body>
+</html>
+
