@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 视频运镜提示词大全</title>
+  <meta name="description" content="AI 视频制作运镜提示词参考：基础运镜、高级运镜、特效运镜、组合运镜等完整分类" />
+  <link rel="stylesheet" href="./comfyui/style.css" />
+  <style>
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .prompt-tag {
+      display: inline-block;
+      padding: 8px 14px;
+      background: rgba(106, 162, 255, 0.1);
+      border: 1px solid rgba(106, 162, 255, 0.3);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .prompt-tag:hover {
+      background: rgba(106, 162, 255, 0.2);
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+    .prompt-tag:active {
+      transform: translateY(0);
+    }
+    .copy-btn {
+      margin-left: 8px;
+      padding: 4px 8px;
+      font-size: 12px;
+      background: rgba(106, 162, 255, 0.15);
+      border: 1px solid rgba(106, 162, 255, 0.3);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .section-title {
+      margin-top: 40px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .example-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .example-box h4 {
+      margin-top: 0;
+      color: var(--brand);
+    }
+    code {
+      background: rgba(106, 162, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI 学习中心</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./camera_movement.html" class="nav-link active">运镜提示词</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
+        <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>AI 视频运镜提示词大全</h1>
+      <p class="subtitle">丰富的运镜提示词分类，助力 AI 视频制作</p>
+    </section>
+
+    <section class="doc">
+      <h2 id="intro">使用说明</h2>
+      <p>点击下方的提示词标签即可复制，然后在你的 AI 视频生成工具中使用。可以组合多个运镜提示词以获得更丰富的视觉效果。</p>
+      
+      <div class="example-box">
+        <h4>示例用法</h4>
+        <p>在提示词中添加运镜描述，例如：</p>
+        <code>slow dolly forward, smooth tracking shot, cinematic camera movement</code>
+        <p>或使用中文描述：</p>
+        <code>缓慢推进，平滑跟踪，电影级运镜</code>
+      </div>
+
+      <h2 class="section-title" id="basic">1. 基础运镜（推拉摇移）</h2>
+      <div class="prompt-grid" id="basic-movements">
+        <div class="prompt-tag">dolly forward<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dolly back<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dolly in<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dolly out<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">zoom in<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">zoom out<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">pan left<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">pan right<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">pan up<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">pan down<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">tilt up<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">tilt down<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">push in<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">pull out<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">slow push<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">slow pull<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="advanced">2. 高级运镜</h2>
+      <div class="prompt-grid" id="advanced-movements">
+        <div class="prompt-tag">tracking shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">following shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">crane shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">jib up<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">jib down<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">orbiting shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">arc shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">circular motion<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">spiral shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">360 orbit<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">helicopter shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">flyover<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">reveal shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">whip pan<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">swish pan<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dutch angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">rolling shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">lateral movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">diagonal movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">parallel tracking<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="speed">3. 速度与节奏</h2>
+      <div class="prompt-grid" id="speed-movements">
+        <div class="prompt-tag">slow motion<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">time-lapse<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">smooth movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">gradual movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">rapid movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">sudden movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">ease in<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">ease out<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">ease in-out<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">constant speed<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">accelerating<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">decelerating<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">jerky movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">stuttering camera<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="angle">4. 角度与视角</h2>
+      <div class="prompt-grid" id="angle-movements">
+        <div class="prompt-tag">bird's eye view<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">worm's eye view<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">low angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">high angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">eye level<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">overhead shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">ground level<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">aerial view<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">POV shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">first person view<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">third person view<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">oblique angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">canted angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">extreme angle<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="focus">5. 焦点与景深</h2>
+      <div class="prompt-grid" id="focus-movements">
+        <div class="prompt-tag">rack focus<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">focus pull<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">shallow depth of field<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">deep focus<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">focus transition<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">bokeh effect<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">soft focus<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">sharp focus<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">focus breathing<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="stabilization">6. 稳定性与抖动</h2>
+      <div class="prompt-grid" id="stabilization-movements">
+        <div class="prompt-tag">steady shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">stabilized camera<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">handheld shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">shaky camera<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">camera shake<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">micro shake<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">vibrating camera<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">gimbal shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">tripod shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">floating camera<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="distance">7. 距离与构图</h2>
+      <div class="prompt-grid" id="distance-movements">
+        <div class="prompt-tag">extreme close-up<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">close-up<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">medium shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">wide shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">extreme wide shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">establishing shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">long shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">full shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">two shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">over the shoulder<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="special">8. 特殊运镜效果</h2>
+      <div class="prompt-grid" id="special-movements">
+        <div class="prompt-tag">bullet time<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">matrix effect<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">snap zoom<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">crash zoom<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">vertigo effect<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dolly zoom<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">zolly shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">ken burns effect<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">parallax effect<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">motion blur<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">speed ramping<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">freeze frame<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="cinematic">9. 电影级运镜</h2>
+      <div class="prompt-grid" id="cinematic-movements">
+        <div class="prompt-tag">cinematic camera movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">film-like movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">epic reveal<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">dramatic push<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">theatrical movement<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">hero shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">money shot<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">cinematic sweep<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">cinematic glide<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">blockbuster style<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="chinese">10. 中文运镜提示词</h2>
+      <div class="prompt-grid" id="chinese-movements">
+        <div class="prompt-tag">缓慢推进<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">快速拉远<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">左右横移<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">上下摇摄<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">环绕拍摄<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">跟踪拍摄<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">升降镜头<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">俯视镜头<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">仰视镜头<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">航拍镜头<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">第一人称视角<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">第三人称视角<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">慢动作<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">延时摄影<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">平滑运镜<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">手持拍摄<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">电影级运镜<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">推拉变焦<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">希区柯克变焦<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag">旋转镜头<span class="copy-btn">复制</span></div>
+      </div>
+
+      <h2 class="section-title" id="combinations">11. 组合运镜示例</h2>
+      <div class="example-box">
+        <h4>示例 1：电影级开场</h4>
+        <code>slow dolly forward, smooth tracking shot, cinematic camera movement, shallow depth of field</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 2：动作场景</h4>
+        <code>rapid pan, handheld shot, camera shake, following shot, dynamic movement</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 3：史诗级揭示</h4>
+        <code>crane shot, slow pull out, epic reveal, wide shot, cinematic sweep</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 4：紧张氛围</h4>
+        <code>dutch angle, push in, rack focus, dramatic push, shallow depth of field</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 5：自然风光</h4>
+        <code>slow pan, aerial view, smooth movement, wide shot, establishing shot</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 6：人物特写</h4>
+        <code>slow dolly in, close-up, rack focus, shallow depth of field, smooth movement</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 7：中文组合</h4>
+        <code>缓慢推进，环绕拍摄，电影级运镜，浅景深效果</code>
+      </div>
+      <div class="example-box">
+        <h4>示例 8：中文组合</h4>
+        <code>快速横移，手持拍摄，跟踪镜头，动态运镜</code>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 AI 学习中心</span>
+      <span class="sep">·</span>
+      <a href="./index.html">首页</a>
+      <span class="sep">·</span>
+      <a href="./camera_movement.html">运镜提示词</a>
+    </div>
+  </footer>
+
+  <script src="./comfyui/main.js"></script>
+  <script>
+    // 复制功能
+    document.querySelectorAll('.prompt-tag').forEach(tag => {
+      tag.addEventListener('click', function(e) {
+        const text = this.childNodes[0].textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = this.querySelector('.copy-btn');
+          const originalText = btn.textContent;
+          btn.textContent = '已复制！';
+          btn.style.background = 'rgba(106, 162, 255, 0.3)';
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+          }, 1000);
+        }).catch(err => {
+          console.error('复制失败:', err);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
