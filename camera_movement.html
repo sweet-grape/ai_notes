@@ -14,8 +14,9 @@
       margin: 20px 0;
     }
     .prompt-tag {
-      display: inline-block;
-      padding: 8px 14px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 14px;
       background: rgba(106, 162, 255, 0.1);
       border: 1px solid rgba(106, 162, 255, 0.3);
       border-radius: 6px;
@@ -23,6 +24,8 @@
       font-size: 14px;
       cursor: pointer;
       transition: all 0.2s;
+      min-height: 60px;
+      justify-content: space-between;
     }
     .prompt-tag:hover {
       background: rgba(106, 162, 255, 0.2);
@@ -32,13 +35,36 @@
     .prompt-tag:active {
       transform: translateY(0);
     }
+    .prompt-en {
+      font-weight: 500;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+    .prompt-zh {
+      font-size: 13px;
+      color: var(--muted);
+    }
     .copy-btn {
-      margin-left: 8px;
+      margin-top: 6px;
       padding: 4px 8px;
-      font-size: 12px;
+      font-size: 11px;
       background: rgba(106, 162, 255, 0.15);
       border: 1px solid rgba(106, 162, 255, 0.3);
       border-radius: 4px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+    .copy-btns {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .copy-btn-small {
+      padding: 3px 6px;
+      font-size: 10px;
+      background: rgba(106, 162, 255, 0.15);
+      border: 1px solid rgba(106, 162, 255, 0.3);
+      border-radius: 3px;
       cursor: pointer;
     }
     .section-title {
@@ -91,189 +117,1178 @@
       <p>点击下方的提示词标签即可复制，然后在你的 AI 视频生成工具中使用。可以组合多个运镜提示词以获得更丰富的视觉效果。</p>
       
       <div class="example-box">
+        <h4>AI 视频制作最佳实践</h4>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li><strong>组合使用</strong>：单个运镜提示词通常效果有限，建议组合 2-4 个提示词</li>
+          <li><strong>明确描述</strong>：使用具体的运镜术语（如 "slow dolly forward"）比模糊描述（如 "camera moves"）效果更好</li>
+          <li><strong>速度控制</strong>：添加速度修饰词（slow, rapid, smooth）可以让运镜更自然</li>
+          <li><strong>场景匹配</strong>：根据场景选择合适的运镜，如人物特写用 "dolly in"，风景用 "aerial view"</li>
+          <li><strong>工具差异</strong>：不同 AI 视频工具（Runway Gen-2、Pika Labs、Stable Video Diffusion）对提示词的理解可能略有差异</li>
+        </ul>
+      </div>
+      
+      <div class="example-box">
         <h4>示例用法</h4>
         <p>在提示词中添加运镜描述，例如：</p>
-        <code>slow dolly forward, smooth tracking shot, cinematic camera movement</code>
+        <code>slow dolly forward, smooth tracking shot, cinematic camera movement, shallow depth of field</code>
         <p>或使用中文描述：</p>
-        <code>缓慢推进，平滑跟踪，电影级运镜</code>
+        <code>缓慢推进，平滑跟踪，电影级运镜，浅景深</code>
+        <p style="margin-top: 12px;"><strong>提示</strong>：英文提示词通常效果更好，建议优先使用英文版本。</p>
       </div>
 
       <h2 class="section-title" id="basic">1. 基础运镜（推拉摇移）</h2>
       <div class="prompt-grid" id="basic-movements">
-        <div class="prompt-tag">dolly forward<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dolly back<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dolly in<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dolly out<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">zoom in<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">zoom out<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">pan left<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">pan right<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">pan up<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">pan down<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">tilt up<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">tilt down<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">push in<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">pull out<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">slow push<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">slow pull<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="dolly forward" data-zh="推进">
+          <span class="prompt-en">dolly forward</span>
+          <span class="prompt-zh">推进</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dolly back" data-zh="拉远">
+          <span class="prompt-en">dolly back</span>
+          <span class="prompt-zh">拉远</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dolly in" data-zh="推近">
+          <span class="prompt-en">dolly in</span>
+          <span class="prompt-zh">推近</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dolly out" data-zh="拉远">
+          <span class="prompt-en">dolly out</span>
+          <span class="prompt-zh">拉远</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="static shot" data-zh="固定镜头">
+          <span class="prompt-en">static shot</span>
+          <span class="prompt-zh">固定镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="locked-off shot" data-zh="锁定镜头">
+          <span class="prompt-en">locked-off shot</span>
+          <span class="prompt-zh">锁定镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="zoom in" data-zh="放大">
+          <span class="prompt-en">zoom in</span>
+          <span class="prompt-zh">放大</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="zoom out" data-zh="缩小">
+          <span class="prompt-en">zoom out</span>
+          <span class="prompt-zh">缩小</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="pan left" data-zh="左摇">
+          <span class="prompt-en">pan left</span>
+          <span class="prompt-zh">左摇</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="pan right" data-zh="右摇">
+          <span class="prompt-en">pan right</span>
+          <span class="prompt-zh">右摇</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="pan up" data-zh="向上摇摄">
+          <span class="prompt-en">pan up</span>
+          <span class="prompt-zh">向上摇摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="pan down" data-zh="向下摇摄">
+          <span class="prompt-en">pan down</span>
+          <span class="prompt-zh">向下摇摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="tilt up" data-zh="上仰">
+          <span class="prompt-en">tilt up</span>
+          <span class="prompt-zh">上仰</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="tilt down" data-zh="下俯">
+          <span class="prompt-en">tilt down</span>
+          <span class="prompt-zh">下俯</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="push in" data-zh="推入">
+          <span class="prompt-en">push in</span>
+          <span class="prompt-zh">推入</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="pull out" data-zh="拉出">
+          <span class="prompt-en">pull out</span>
+          <span class="prompt-zh">拉出</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="long take" data-zh="长镜头">
+          <span class="prompt-en">long take</span>
+          <span class="prompt-zh">长镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="slow push" data-zh="缓慢推进">
+          <span class="prompt-en">slow push</span>
+          <span class="prompt-zh">缓慢推进</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="slow pull" data-zh="缓慢拉远">
+          <span class="prompt-en">slow pull</span>
+          <span class="prompt-zh">缓慢拉远</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="advanced">2. 高级运镜</h2>
       <div class="prompt-grid" id="advanced-movements">
-        <div class="prompt-tag">tracking shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">following shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">crane shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">jib up<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">jib down<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">orbiting shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">arc shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">circular motion<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">spiral shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">360 orbit<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">helicopter shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">flyover<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">reveal shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">whip pan<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">swish pan<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dutch angle<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">rolling shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">lateral movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">diagonal movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">parallel tracking<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="tracking shot" data-zh="跟踪拍摄">
+          <span class="prompt-en">tracking shot</span>
+          <span class="prompt-zh">跟踪拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="following shot" data-zh="跟随拍摄">
+          <span class="prompt-en">following shot</span>
+          <span class="prompt-zh">跟随拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="crane shot" data-zh="升降镜头">
+          <span class="prompt-en">crane shot</span>
+          <span class="prompt-zh">升降镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="jib up" data-zh="摇臂上升">
+          <span class="prompt-en">jib up</span>
+          <span class="prompt-zh">摇臂上升</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="jib down" data-zh="摇臂下降">
+          <span class="prompt-en">jib down</span>
+          <span class="prompt-zh">摇臂下降</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="orbiting shot" data-zh="环绕拍摄">
+          <span class="prompt-en">orbiting shot</span>
+          <span class="prompt-zh">环绕拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="arc shot" data-zh="弧线运动">
+          <span class="prompt-en">arc shot</span>
+          <span class="prompt-zh">弧线运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="circular motion" data-zh="圆形运动">
+          <span class="prompt-en">circular motion</span>
+          <span class="prompt-zh">圆形运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="spiral shot" data-zh="螺旋运动">
+          <span class="prompt-en">spiral shot</span>
+          <span class="prompt-zh">螺旋运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="360 orbit" data-zh="360度环绕">
+          <span class="prompt-en">360 orbit</span>
+          <span class="prompt-zh">360度环绕</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="helicopter shot" data-zh="航拍镜头">
+          <span class="prompt-en">helicopter shot</span>
+          <span class="prompt-zh">航拍镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="flyover" data-zh="飞越镜头">
+          <span class="prompt-en">flyover</span>
+          <span class="prompt-zh">飞越镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="reveal shot" data-zh="揭示镜头">
+          <span class="prompt-en">reveal shot</span>
+          <span class="prompt-zh">揭示镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="whip pan" data-zh="快速摇摄">
+          <span class="prompt-en">whip pan</span>
+          <span class="prompt-zh">快速摇摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="swish pan" data-zh="甩动摇摄">
+          <span class="prompt-en">swish pan</span>
+          <span class="prompt-zh">甩动摇摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dutch angle" data-zh="倾斜角度">
+          <span class="prompt-en">dutch angle</span>
+          <span class="prompt-zh">倾斜角度</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="rolling shot" data-zh="滚动拍摄">
+          <span class="prompt-en">rolling shot</span>
+          <span class="prompt-zh">滚动拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="lateral movement" data-zh="横向移动">
+          <span class="prompt-en">lateral movement</span>
+          <span class="prompt-zh">横向移动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="diagonal movement" data-zh="斜向移动">
+          <span class="prompt-en">diagonal movement</span>
+          <span class="prompt-zh">斜向移动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="parallel tracking" data-zh="平行跟踪">
+          <span class="prompt-en">parallel tracking</span>
+          <span class="prompt-zh">平行跟踪</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="backward tracking" data-zh="向后跟踪">
+          <span class="prompt-en">backward tracking</span>
+          <span class="prompt-zh">向后跟踪</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="sideways tracking" data-zh="侧向跟踪">
+          <span class="prompt-en">sideways tracking</span>
+          <span class="prompt-zh">侧向跟踪</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="walking shot" data-zh="步行拍摄">
+          <span class="prompt-en">walking shot</span>
+          <span class="prompt-zh">步行拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="running shot" data-zh="跑步拍摄">
+          <span class="prompt-en">running shot</span>
+          <span class="prompt-zh">跑步拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="speed">3. 速度与节奏</h2>
       <div class="prompt-grid" id="speed-movements">
-        <div class="prompt-tag">slow motion<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">time-lapse<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">smooth movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">gradual movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">rapid movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">sudden movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">ease in<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">ease out<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">ease in-out<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">constant speed<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">accelerating<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">decelerating<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">jerky movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">stuttering camera<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="slow motion" data-zh="慢动作">
+          <span class="prompt-en">slow motion</span>
+          <span class="prompt-zh">慢动作</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="time-lapse" data-zh="延时摄影">
+          <span class="prompt-en">time-lapse</span>
+          <span class="prompt-zh">延时摄影</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="smooth movement" data-zh="平滑运动">
+          <span class="prompt-en">smooth movement</span>
+          <span class="prompt-zh">平滑运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="gradual movement" data-zh="渐进运动">
+          <span class="prompt-en">gradual movement</span>
+          <span class="prompt-zh">渐进运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="rapid movement" data-zh="快速运动">
+          <span class="prompt-en">rapid movement</span>
+          <span class="prompt-zh">快速运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="sudden movement" data-zh="突然运动">
+          <span class="prompt-en">sudden movement</span>
+          <span class="prompt-zh">突然运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="ease in" data-zh="缓入">
+          <span class="prompt-en">ease in</span>
+          <span class="prompt-zh">缓入</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="ease out" data-zh="缓出">
+          <span class="prompt-en">ease out</span>
+          <span class="prompt-zh">缓出</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="ease in-out" data-zh="缓入缓出">
+          <span class="prompt-en">ease in-out</span>
+          <span class="prompt-zh">缓入缓出</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="constant speed" data-zh="匀速">
+          <span class="prompt-en">constant speed</span>
+          <span class="prompt-zh">匀速</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="accelerating" data-zh="加速">
+          <span class="prompt-en">accelerating</span>
+          <span class="prompt-zh">加速</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="decelerating" data-zh="减速">
+          <span class="prompt-en">decelerating</span>
+          <span class="prompt-zh">减速</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="jerky movement" data-zh="抖动运动">
+          <span class="prompt-en">jerky movement</span>
+          <span class="prompt-zh">抖动运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="stuttering camera" data-zh="卡顿镜头">
+          <span class="prompt-en">stuttering camera</span>
+          <span class="prompt-zh">卡顿镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="angle">4. 角度与视角</h2>
       <div class="prompt-grid" id="angle-movements">
-        <div class="prompt-tag">bird's eye view<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">worm's eye view<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">low angle<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">high angle<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">eye level<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">overhead shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">ground level<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">aerial view<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">POV shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">first person view<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">third person view<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">oblique angle<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">canted angle<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">extreme angle<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="bird's eye view" data-zh="鸟瞰视角">
+          <span class="prompt-en">bird's eye view</span>
+          <span class="prompt-zh">鸟瞰视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="worm's eye view" data-zh="虫眼视角">
+          <span class="prompt-en">worm's eye view</span>
+          <span class="prompt-zh">虫眼视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="low angle" data-zh="低角度">
+          <span class="prompt-en">low angle</span>
+          <span class="prompt-zh">低角度</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="high angle" data-zh="高角度">
+          <span class="prompt-en">high angle</span>
+          <span class="prompt-zh">高角度</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="eye level" data-zh="平视">
+          <span class="prompt-en">eye level</span>
+          <span class="prompt-zh">平视</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="overhead shot" data-zh="俯拍">
+          <span class="prompt-en">overhead shot</span>
+          <span class="prompt-zh">俯拍</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="ground level" data-zh="地面视角">
+          <span class="prompt-en">ground level</span>
+          <span class="prompt-zh">地面视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="aerial view" data-zh="航拍视角">
+          <span class="prompt-en">aerial view</span>
+          <span class="prompt-zh">航拍视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="POV shot" data-zh="主观视角">
+          <span class="prompt-en">POV shot</span>
+          <span class="prompt-zh">主观视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="first person view" data-zh="第一人称视角">
+          <span class="prompt-en">first person view</span>
+          <span class="prompt-zh">第一人称视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="third person view" data-zh="第三人称视角">
+          <span class="prompt-en">third person view</span>
+          <span class="prompt-zh">第三人称视角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="oblique angle" data-zh="斜角">
+          <span class="prompt-en">oblique angle</span>
+          <span class="prompt-zh">斜角</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="canted angle" data-zh="倾斜角度">
+          <span class="prompt-en">canted angle</span>
+          <span class="prompt-zh">倾斜角度</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="extreme angle" data-zh="极端角度">
+          <span class="prompt-en">extreme angle</span>
+          <span class="prompt-zh">极端角度</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="focus">5. 焦点与景深</h2>
       <div class="prompt-grid" id="focus-movements">
-        <div class="prompt-tag">rack focus<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">focus pull<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">shallow depth of field<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">deep focus<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">focus transition<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">bokeh effect<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">soft focus<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">sharp focus<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">focus breathing<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="rack focus" data-zh="焦点转移">
+          <span class="prompt-en">rack focus</span>
+          <span class="prompt-zh">焦点转移</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="focus pull" data-zh="焦点拉伸">
+          <span class="prompt-en">focus pull</span>
+          <span class="prompt-zh">焦点拉伸</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="shallow depth of field" data-zh="浅景深">
+          <span class="prompt-en">shallow depth of field</span>
+          <span class="prompt-zh">浅景深</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="deep focus" data-zh="深焦">
+          <span class="prompt-en">deep focus</span>
+          <span class="prompt-zh">深焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="focus transition" data-zh="焦点过渡">
+          <span class="prompt-en">focus transition</span>
+          <span class="prompt-zh">焦点过渡</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="bokeh effect" data-zh="虚化效果">
+          <span class="prompt-en">bokeh effect</span>
+          <span class="prompt-zh">虚化效果</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="soft focus" data-zh="柔焦">
+          <span class="prompt-en">soft focus</span>
+          <span class="prompt-zh">柔焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="sharp focus" data-zh="锐焦">
+          <span class="prompt-en">sharp focus</span>
+          <span class="prompt-zh">锐焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="focus breathing" data-zh="呼吸效应">
+          <span class="prompt-en">focus breathing</span>
+          <span class="prompt-zh">呼吸效应</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="stabilization">6. 稳定性与抖动</h2>
       <div class="prompt-grid" id="stabilization-movements">
-        <div class="prompt-tag">steady shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">stabilized camera<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">handheld shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">shaky camera<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">camera shake<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">micro shake<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">vibrating camera<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">gimbal shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">tripod shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">floating camera<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="steady shot" data-zh="稳定镜头">
+          <span class="prompt-en">steady shot</span>
+          <span class="prompt-zh">稳定镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="stabilized camera" data-zh="稳定相机">
+          <span class="prompt-en">stabilized camera</span>
+          <span class="prompt-zh">稳定相机</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="handheld shot" data-zh="手持拍摄">
+          <span class="prompt-en">handheld shot</span>
+          <span class="prompt-zh">手持拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="shaky camera" data-zh="抖动镜头">
+          <span class="prompt-en">shaky camera</span>
+          <span class="prompt-zh">抖动镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="camera shake" data-zh="相机抖动">
+          <span class="prompt-en">camera shake</span>
+          <span class="prompt-zh">相机抖动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="micro shake" data-zh="微抖动">
+          <span class="prompt-en">micro shake</span>
+          <span class="prompt-zh">微抖动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="vibrating camera" data-zh="震动镜头">
+          <span class="prompt-en">vibrating camera</span>
+          <span class="prompt-zh">震动镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="gimbal shot" data-zh="云台拍摄">
+          <span class="prompt-en">gimbal shot</span>
+          <span class="prompt-zh">云台拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="tripod shot" data-zh="三脚架拍摄">
+          <span class="prompt-en">tripod shot</span>
+          <span class="prompt-zh">三脚架拍摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="floating camera" data-zh="浮动镜头">
+          <span class="prompt-en">floating camera</span>
+          <span class="prompt-zh">浮动镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="organic movement" data-zh="有机运动">
+          <span class="prompt-en">organic movement</span>
+          <span class="prompt-zh">有机运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="natural camera movement" data-zh="自然运镜">
+          <span class="prompt-en">natural camera movement</span>
+          <span class="prompt-zh">自然运镜</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="distance">7. 距离与构图</h2>
       <div class="prompt-grid" id="distance-movements">
-        <div class="prompt-tag">extreme close-up<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">close-up<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">medium shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">wide shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">extreme wide shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">establishing shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">long shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">full shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">two shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">over the shoulder<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="extreme close-up" data-zh="极特写">
+          <span class="prompt-en">extreme close-up</span>
+          <span class="prompt-zh">极特写</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="close-up" data-zh="特写">
+          <span class="prompt-en">close-up</span>
+          <span class="prompt-zh">特写</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="medium shot" data-zh="中景">
+          <span class="prompt-en">medium shot</span>
+          <span class="prompt-zh">中景</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="wide shot" data-zh="全景">
+          <span class="prompt-en">wide shot</span>
+          <span class="prompt-zh">全景</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="extreme wide shot" data-zh="极全景">
+          <span class="prompt-en">extreme wide shot</span>
+          <span class="prompt-zh">极全景</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="establishing shot" data-zh="定场镜头">
+          <span class="prompt-en">establishing shot</span>
+          <span class="prompt-zh">定场镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="long shot" data-zh="远景">
+          <span class="prompt-en">long shot</span>
+          <span class="prompt-zh">远景</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="full shot" data-zh="全身镜头">
+          <span class="prompt-en">full shot</span>
+          <span class="prompt-zh">全身镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="two shot" data-zh="双人镜头">
+          <span class="prompt-en">two shot</span>
+          <span class="prompt-zh">双人镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="over the shoulder" data-zh="过肩镜头">
+          <span class="prompt-en">over the shoulder</span>
+          <span class="prompt-zh">过肩镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="special">8. 特殊运镜效果</h2>
       <div class="prompt-grid" id="special-movements">
-        <div class="prompt-tag">bullet time<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">matrix effect<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">snap zoom<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">crash zoom<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">vertigo effect<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dolly zoom<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">zolly shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">ken burns effect<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">parallax effect<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">motion blur<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">speed ramping<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">freeze frame<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="bullet time" data-zh="子弹时间">
+          <span class="prompt-en">bullet time</span>
+          <span class="prompt-zh">子弹时间</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="matrix effect" data-zh="矩阵效果">
+          <span class="prompt-en">matrix effect</span>
+          <span class="prompt-zh">矩阵效果</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="snap zoom" data-zh="快速变焦">
+          <span class="prompt-en">snap zoom</span>
+          <span class="prompt-zh">快速变焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="crash zoom" data-zh="冲击变焦">
+          <span class="prompt-en">crash zoom</span>
+          <span class="prompt-zh">冲击变焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="vertigo effect" data-zh="眩晕效果">
+          <span class="prompt-en">vertigo effect</span>
+          <span class="prompt-zh">眩晕效果</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dolly zoom" data-zh="推拉变焦">
+          <span class="prompt-en">dolly zoom</span>
+          <span class="prompt-zh">推拉变焦</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="zolly shot" data-zh="变焦镜头">
+          <span class="prompt-en">zolly shot</span>
+          <span class="prompt-zh">变焦镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="ken burns effect" data-zh="肯·伯恩斯效果">
+          <span class="prompt-en">ken burns effect</span>
+          <span class="prompt-zh">肯·伯恩斯效果</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="parallax effect" data-zh="视差效果">
+          <span class="prompt-en">parallax effect</span>
+          <span class="prompt-zh">视差效果</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="motion blur" data-zh="运动模糊">
+          <span class="prompt-en">motion blur</span>
+          <span class="prompt-zh">运动模糊</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="speed ramping" data-zh="速度渐变">
+          <span class="prompt-en">speed ramping</span>
+          <span class="prompt-zh">速度渐变</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="freeze frame" data-zh="定格画面">
+          <span class="prompt-en">freeze frame</span>
+          <span class="prompt-zh">定格画面</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title" id="cinematic">9. 电影级运镜</h2>
       <div class="prompt-grid" id="cinematic-movements">
-        <div class="prompt-tag">cinematic camera movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">film-like movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">epic reveal<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">dramatic push<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">theatrical movement<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">hero shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">money shot<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">cinematic sweep<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">cinematic glide<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">blockbuster style<span class="copy-btn">复制</span></div>
+        <div class="prompt-tag" data-en="cinematic camera movement" data-zh="电影级运镜">
+          <span class="prompt-en">cinematic camera movement</span>
+          <span class="prompt-zh">电影级运镜</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="film-like movement" data-zh="电影感运动">
+          <span class="prompt-en">film-like movement</span>
+          <span class="prompt-zh">电影感运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="epic reveal" data-zh="史诗级揭示">
+          <span class="prompt-en">epic reveal</span>
+          <span class="prompt-zh">史诗级揭示</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="dramatic push" data-zh="戏剧性推进">
+          <span class="prompt-en">dramatic push</span>
+          <span class="prompt-zh">戏剧性推进</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="theatrical movement" data-zh="戏剧性运动">
+          <span class="prompt-en">theatrical movement</span>
+          <span class="prompt-zh">戏剧性运动</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="hero shot" data-zh="英雄镜头">
+          <span class="prompt-en">hero shot</span>
+          <span class="prompt-zh">英雄镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="money shot" data-zh="关键镜头">
+          <span class="prompt-en">money shot</span>
+          <span class="prompt-zh">关键镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="cinematic sweep" data-zh="电影级扫摄">
+          <span class="prompt-en">cinematic sweep</span>
+          <span class="prompt-zh">电影级扫摄</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="cinematic glide" data-zh="电影级滑行">
+          <span class="prompt-en">cinematic glide</span>
+          <span class="prompt-zh">电影级滑行</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="blockbuster style" data-zh="大片风格">
+          <span class="prompt-en">blockbuster style</span>
+          <span class="prompt-zh">大片风格</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
       </div>
 
-      <h2 class="section-title" id="chinese">10. 中文运镜提示词</h2>
-      <div class="prompt-grid" id="chinese-movements">
-        <div class="prompt-tag">缓慢推进<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">快速拉远<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">左右横移<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">上下摇摄<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">环绕拍摄<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">跟踪拍摄<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">升降镜头<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">俯视镜头<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">仰视镜头<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">航拍镜头<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">第一人称视角<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">第三人称视角<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">慢动作<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">延时摄影<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">平滑运镜<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">手持拍摄<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">电影级运镜<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">推拉变焦<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">希区柯克变焦<span class="copy-btn">复制</span></div>
-        <div class="prompt-tag">旋转镜头<span class="copy-btn">复制</span></div>
-      </div>
-
-      <h2 class="section-title" id="combinations">11. 组合运镜示例</h2>
+      <h2 class="section-title" id="combinations">10. 组合运镜示例</h2>
       <div class="example-box">
         <h4>示例 1：电影级开场</h4>
         <code>slow dolly forward, smooth tracking shot, cinematic camera movement, shallow depth of field</code>
@@ -321,18 +1336,31 @@
 
   <script src="./comfyui/main.js"></script>
   <script>
-    // 复制功能
-    document.querySelectorAll('.prompt-tag').forEach(tag => {
-      tag.addEventListener('click', function(e) {
-        const text = this.childNodes[0].textContent.trim();
-        navigator.clipboard.writeText(text).then(() => {
-          const btn = this.querySelector('.copy-btn');
-          const originalText = btn.textContent;
-          btn.textContent = '已复制！';
-          btn.style.background = 'rgba(106, 162, 255, 0.3)';
+    // 复制功能 - 支持中英文对照
+    document.querySelectorAll('.copy-btn-small').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const tag = this.closest('.prompt-tag');
+        const en = tag.getAttribute('data-en');
+        const zh = tag.getAttribute('data-zh');
+        const copyType = this.getAttribute('data-copy');
+        
+        let textToCopy = '';
+        if (copyType === 'en') {
+          textToCopy = en;
+        } else if (copyType === 'zh') {
+          textToCopy = zh;
+        } else if (copyType === 'both') {
+          textToCopy = `${en} / ${zh}`;
+        }
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalText = this.textContent;
+          this.textContent = '已复制！';
+          this.style.background = 'rgba(106, 162, 255, 0.3)';
           setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
+            this.textContent = originalText;
+            this.style.background = '';
           }, 1000);
         }).catch(err => {
           console.error('复制失败:', err);
