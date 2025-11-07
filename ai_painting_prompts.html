@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 绘画提示词大全</title>
+  <meta name="description" content="AI 绘画提示词分类汇总：综述氛围、风格、主体、场景、色彩、构图、景别、光影与组合示例" />
+  <link rel="stylesheet" href="./comfyui/style.css" />
+  <style>
+    .hero-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .prompt-section {
+      margin: 48px 0 24px;
+    }
+    .prompt-section h2 {
+      margin-bottom: 8px;
+    }
+    .prompt-desc {
+      color: var(--muted);
+      margin: 8px 0 16px;
+      font-size: 14px;
+    }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .prompt-chip {
+      background: rgba(106, 162, 255, 0.08);
+      border: 1px solid rgba(106, 162, 255, 0.35);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .prompt-chip:hover {
+      background: rgba(106, 162, 255, 0.16);
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+    .prompt-chip:active {
+      transform: translateY(0);
+    }
+    .chip-main {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .chip-sub {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+    .tips-list {
+      margin: 12px 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    .tips-list li { margin-bottom: 6px; }
+    .example-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .example-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .example-card h4 {
+      margin: 0 0 10px;
+      color: var(--brand);
+    }
+    .example-card code {
+      display: block;
+      background: rgba(106, 162, 255, 0.1);
+      border: 1px solid rgba(106, 162, 255, 0.25);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: "Courier New", monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 0.9em;
+    }
+    .copy-hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(234, 248, 255, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI 学习中心</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./ai_painting_prompts.html" class="nav-link active">AI 绘画提示词</a>
+        <a href="./camera_movement.html" class="nav-link">运镜提示词</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
+        <a href="./comfyui/cases.html" class="nav-link">案例展示</a>
+        <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
+        <a href="https://github.com/comfyanonymous/ComfyUI" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>AI 绘画提示词大全</h1>
+      <p class="subtitle">涵盖风格、主体、场景、色彩、构图、景别、光影等多维提示词，助你快速拼装高质量画面</p>
+      <p class="hero-note">点击任意提示词即可复制，建议组合 3-6 个关键词，并搭配模型、分辨率、细节程度等参数。</p>
+    </section>
+
+    <section class="prompt-section">
+      <h2>使用攻略</h2>
+      <ul class="tips-list">
+        <li><strong>分层构思</strong>：先确定整体氛围，再补充风格、主体、场景与光影，逐层完善画面。</li>
+        <li><strong>中英混写</strong>：英文提示词通常解析更稳定，可在关键术语后附中文解释帮助记忆。</li>
+        <li><strong>控制数量</strong>：关键词过多容易冲突，主提示词 50-80 token 内更易出图。</li>
+        <li><strong>避免矛盾</strong>：同一项保持逻辑统一，如色彩既要“高饱和”就不再添加“莫兰迪灰”。</li>
+        <li><strong>善用负面词</strong>：如“no noise, no blur, clean edges”提升成品质量。</li>
+      </ul>
+    </section>
+
+    <section class="prompt-section" id="overview">
+      <h2>综述氛围</h2>
+      <p class="prompt-desc">整体气质 / 叙事基调，可搭配风格与颜色共同决定画面氛围。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="梦幻唯美, dreamlike ethereal"><span class="chip-main">梦幻唯美</span><span class="chip-sub">dreamlike ethereal</span></div>
+        <div class="prompt-chip" data-copy="复古优雅, vintage elegance"><span class="chip-main">复古优雅</span><span class="chip-sub">vintage elegance</span></div>
+        <div class="prompt-chip" data-copy="极简写意, minimalist poetic"><span class="chip-main">极简写意</span><span class="chip-sub">minimalist poetic</span></div>
+        <div class="prompt-chip" data-copy="史诗宏伟, epic grandeur"><span class="chip-main">史诗宏伟</span><span class="chip-sub">epic grandeur</span></div>
+        <div class="prompt-chip" data-copy="科幻未来感, sci-fi futuristic"><span class="chip-main">科幻未来感</span><span class="chip-sub">sci-fi futuristic</span></div>
+        <div class="prompt-chip" data-copy="黑暗哥特, dark gothic"><span class="chip-main">黑暗哥特</span><span class="chip-sub">dark gothic</span></div>
+        <div class="prompt-chip" data-copy="治愈系, cozy healing"><span class="chip-main">治愈系</span><span class="chip-sub">cozy healing</span></div>
+        <div class="prompt-chip" data-copy="赛博朋克霓虹, cyberpunk neon"><span class="chip-main">赛博朋克霓虹</span><span class="chip-sub">cyberpunk neon</span></div>
+        <div class="prompt-chip" data-copy="蒸汽波感, vaporwave aesthetic"><span class="chip-main">蒸汽波感</span><span class="chip-sub">vaporwave aesthetic</span></div>
+        <div class="prompt-chip" data-copy="魔幻奇谭, magical folklore"><span class="chip-main">魔幻奇谭</span><span class="chip-sub">magical folklore</span></div>
+        <div class="prompt-chip" data-copy="神秘诡谲, mysterious eerie"><span class="chip-main">神秘诡谲</span><span class="chip-sub">mysterious eerie</span></div>
+        <div class="prompt-chip" data-copy="自然写实, naturalistic realism"><span class="chip-main">自然写实</span><span class="chip-sub">naturalistic realism</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="style">
+      <h2>艺术风格</h2>
+      <p class="prompt-desc">决定笔触、媒介与审美方向，可与综述氛围叠加使用。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="油画质感, oil painting texture"><span class="chip-main">油画质感</span><span class="chip-sub">oil painting texture</span></div>
+        <div class="prompt-chip" data-copy="水彩晕染, watercolor wash"><span class="chip-main">水彩晕染</span><span class="chip-sub">watercolor wash</span></div>
+        <div class="prompt-chip" data-copy="彩铅手绘, colored pencil drawing"><span class="chip-main">彩铅手绘</span><span class="chip-sub">colored pencil drawing</span></div>
+        <div class="prompt-chip" data-copy="洛可可华丽, rococo ornate"><span class="chip-main">洛可可华丽</span><span class="chip-sub">rococo ornate</span></div>
+        <div class="prompt-chip" data-copy="新海诚动画风, Makoto Shinkai style"><span class="chip-main">新海诚动画风</span><span class="chip-sub">Makoto Shinkai style</span></div>
+        <div class="prompt-chip" data-copy="吉卜力手绘, Ghibli hand-drawn"><span class="chip-main">吉卜力手绘</span><span class="chip-sub">Ghibli hand-drawn</span></div>
+        <div class="prompt-chip" data-copy="赛璐璐渲染, cel-shaded"><span class="chip-main">赛璐璐渲染</span><span class="chip-sub">cel-shaded</span></div>
+        <div class="prompt-chip" data-copy="像素艺术, pixel art"><span class="chip-main">像素艺术</span><span class="chip-sub">pixel art</span></div>
+        <div class="prompt-chip" data-copy="低多边形, low poly"><span class="chip-main">低多边形</span><span class="chip-sub">low poly</span></div>
+        <div class="prompt-chip" data-copy="复古胶片, retro film grain"><span class="chip-main">复古胶片</span><span class="chip-sub">retro film grain</span></div>
+        <div class="prompt-chip" data-copy="霓虹合成波, synthwave neon"><span class="chip-main">霓虹合成波</span><span class="chip-sub">synthwave neon</span></div>
+        <div class="prompt-chip" data-copy="巴洛克细节, baroque detail"><span class="chip-main">巴洛克细节</span><span class="chip-sub">baroque detail</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="subject">
+      <h2>主体元素</h2>
+      <p class="prompt-desc">人物 / 生物 / 物件，决定画面焦点，可在描述中加入年龄、性格、服饰。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="光翼少女, winged girl"><span class="chip-main">光翼少女</span><span class="chip-sub">winged girl</span></div>
+        <div class="prompt-chip" data-copy="古风剑客, ancient swordsman"><span class="chip-main">古风剑客</span><span class="chip-sub">ancient swordsman</span></div>
+        <div class="prompt-chip" data-copy="未来机甲战士, mech warrior"><span class="chip-main">未来机甲战士</span><span class="chip-sub">mech warrior</span></div>
+        <div class="prompt-chip" data-copy="赛博狐面舞者, cyber kitsune dancer"><span class="chip-main">赛博狐面舞者</span><span class="chip-sub">cyber kitsune dancer</span></div>
+        <div class="prompt-chip" data-copy="机械宠物, robotic companion"><span class="chip-main">机械宠物</span><span class="chip-sub">robotic companion</span></div>
+        <div class="prompt-chip" data-copy="精灵女王, elven queen"><span class="chip-main">精灵女王</span><span class="chip-sub">elven queen</span></div>
+        <div class="prompt-chip" data-copy="蒸汽朋克飞船, steampunk airship"><span class="chip-main">蒸汽朋克飞船</span><span class="chip-sub">steampunk airship</span></div>
+        <div class="prompt-chip" data-copy="深海巨鲸, leviathan whale"><span class="chip-main">深海巨鲸</span><span class="chip-sub">leviathan whale</span></div>
+        <div class="prompt-chip" data-copy="童话木偶, fairy-tale puppet"><span class="chip-main">童话木偶</span><span class="chip-sub">fairy-tale puppet</span></div>
+        <div class="prompt-chip" data-copy="神秘巫师, arcane mage"><span class="chip-main">神秘巫师</span><span class="chip-sub">arcane mage</span></div>
+        <div class="prompt-chip" data-copy="银河探险家, galactic explorer"><span class="chip-main">银河探险家</span><span class="chip-sub">galactic explorer</span></div>
+        <div class="prompt-chip" data-copy="抽象几何雕塑, abstract geometric sculpture"><span class="chip-main">抽象几何雕塑</span><span class="chip-sub">abstract geometric sculpture</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="scene">
+      <h2>场景环境</h2>
+      <p class="prompt-desc">决定整体空间与背景，搭配光影可强化气氛。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="雾气森林, misty forest"><span class="chip-main">雾气森林</span><span class="chip-sub">misty forest</span></div>
+        <div class="prompt-chip" data-copy="海边日落, seaside sunset"><span class="chip-main">海边日落</span><span class="chip-sub">seaside sunset</span></div>
+        <div class="prompt-chip" data-copy="星际沙漠, interstellar desert"><span class="chip-main">星际沙漠</span><span class="chip-sub">interstellar desert</span></div>
+        <div class="prompt-chip" data-copy="古城灯巷, ancient alley"><span class="chip-main">古城灯巷</span><span class="chip-sub">ancient alley</span></div>
+        <div class="prompt-chip" data-copy="赛博都市天际线, cyberpunk skyline"><span class="chip-main">赛博都市天际线</span><span class="chip-sub">cyberpunk skyline</span></div>
+        <div class="prompt-chip" data-copy="漂浮岛屿, floating islands"><span class="chip-main">漂浮岛屿</span><span class="chip-sub">floating islands</span></div>
+        <div class="prompt-chip" data-copy="深海遗迹, sunken ruins"><span class="chip-main">深海遗迹</span><span class="chip-sub">sunken ruins</span></div>
+        <div class="prompt-chip" data-copy="雪山神庙, snowy temple"><span class="chip-main">雪山神庙</span><span class="chip-sub">snowy temple</span></div>
+        <div class="prompt-chip" data-copy="星辰观测所, stargazer observatory"><span class="chip-main">星辰观测所</span><span class="chip-sub">stargazer observatory</span></div>
+        <div class="prompt-chip" data-copy="雨夜街角, rainy street corner"><span class="chip-main">雨夜街角</span><span class="chip-sub">rainy street corner</span></div>
+        <div class="prompt-chip" data-copy="旧时代车站, vintage station"><span class="chip-main">旧时代车站</span><span class="chip-sub">vintage station</span></div>
+        <div class="prompt-chip" data-copy="未来实验室, futuristic lab"><span class="chip-main">未来实验室</span><span class="chip-sub">futuristic lab</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="color">
+      <h2>色彩倾向</h2>
+      <p class="prompt-desc">设置主色调与视觉冲击，注意与光影保持一致。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="高饱和霓虹, high saturation neon"><span class="chip-main">高饱和霓虹</span><span class="chip-sub">high saturation neon</span></div>
+        <div class="prompt-chip" data-copy="暖橙夕阳, warm sunset orange"><span class="chip-main">暖橙夕阳</span><span class="chip-sub">warm sunset orange</span></div>
+        <div class="prompt-chip" data-copy="冷冽蓝紫, cold blue violet"><span class="chip-main">冷冽蓝紫</span><span class="chip-sub">cold blue violet</span></div>
+        <div class="prompt-chip" data-copy="莫兰迪灰调, morandi palette"><span class="chip-main">莫兰迪灰调</span><span class="chip-sub">morandi palette</span></div>
+        <div class="prompt-chip" data-copy="金属冷光, metallic cool light"><span class="chip-main">金属冷光</span><span class="chip-sub">metallic cool light</span></div>
+        <div class="prompt-chip" data-copy="柔和马卡龙, pastel macarons"><span class="chip-main">柔和马卡龙</span><span class="chip-sub">pastel macarons</span></div>
+        <div class="prompt-chip" data-copy="单色黑白, monochrome"><span class="chip-main">单色黑白</span><span class="chip-sub">monochrome</span></div>
+        <div class="prompt-chip" data-copy="金属渐变光谱, metallic gradient spectrum"><span class="chip-main">金属渐变光谱</span><span class="chip-sub">metallic gradient spectrum</span></div>
+        <div class="prompt-chip" data-copy="补色撞色, complementary clash"><span class="chip-main">补色撞色</span><span class="chip-sub">complementary clash</span></div>
+        <div class="prompt-chip" data-copy="炫彩虹光, iridescent glow"><span class="chip-main">炫彩虹光</span><span class="chip-sub">iridescent glow</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="composition">
+      <h2>构图方式</h2>
+      <p class="prompt-desc">确定视觉引导与画面重心，可结合景别与视角。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="规则对称, symmetric balance"><span class="chip-main">规则对称</span><span class="chip-sub">symmetric balance</span></div>
+        <div class="prompt-chip" data-copy="三分法构图, rule of thirds"><span class="chip-main">三分法构图</span><span class="chip-sub">rule of thirds</span></div>
+        <div class="prompt-chip" data-copy="居中纵深, centered depth"><span class="chip-main">居中纵深</span><span class="chip-sub">centered depth</span></div>
+        <div class="prompt-chip" data-copy="低角度仰视, low-angle perspective"><span class="chip-main">低角度仰视</span><span class="chip-sub">low-angle perspective</span></div>
+        <div class="prompt-chip" data-copy="高角度俯视, high-angle top-down"><span class="chip-main">高角度俯视</span><span class="chip-sub">high-angle top-down</span></div>
+        <div class="prompt-chip" data-copy="环形引导, circular leading lines"><span class="chip-main">环形引导</span><span class="chip-sub">circular leading lines</span></div>
+        <div class="prompt-chip" data-copy="极简留白, minimalist negative space"><span class="chip-main">极简留白</span><span class="chip-sub">minimalist negative space</span></div>
+        <div class="prompt-chip" data-copy="动感斜线, dynamic diagonals"><span class="chip-main">动感斜线</span><span class="chip-sub">dynamic diagonals</span></div>
+        <div class="prompt-chip" data-copy="层叠景深, layered depth"><span class="chip-main">层叠景深</span><span class="chip-sub">layered depth</span></div>
+        <div class="prompt-chip" data-copy="黄金螺旋, golden spiral"><span class="chip-main">黄金螺旋</span><span class="chip-sub">golden spiral</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="shot">
+      <h2>景别与视角</h2>
+      <p class="prompt-desc">控制主体与环境占比，搭配构图可强化叙事。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="超特写, extreme close-up"><span class="chip-main">超特写</span><span class="chip-sub">extreme close-up</span></div>
+        <div class="prompt-chip" data-copy="半身视角, medium shot"><span class="chip-main">半身视角</span><span class="chip-sub">medium shot</span></div>
+        <div class="prompt-chip" data-copy="全身视角, full body shot"><span class="chip-main">全身视角</span><span class="chip-sub">full body shot</span></div>
+        <div class="prompt-chip" data-copy="远景环境, wide establishing shot"><span class="chip-main">远景环境</span><span class="chip-sub">wide establishing shot</span></div>
+        <div class="prompt-chip" data-copy="超远景, extreme wide shot"><span class="chip-main">超远景</span><span class="chip-sub">extreme wide shot</span></div>
+        <div class="prompt-chip" data-copy="鸟瞰俯视, bird's-eye view"><span class="chip-main">鸟瞰俯视</span><span class="chip-sub">bird's-eye view</span></div>
+        <div class="prompt-chip" data-copy="虫瞰仰视, worm's-eye view"><span class="chip-main">虫瞰仰视</span><span class="chip-sub">worm's-eye view</span></div>
+        <div class="prompt-chip" data-copy="环视全景, panoramic sweep"><span class="chip-main">环视全景</span><span class="chip-sub">panoramic sweep</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="lighting">
+      <h2>光影效果</h2>
+      <p class="prompt-desc">强调时间、情绪与层次，可与色彩联动打造高级质感。</p>
+      <div class="prompt-grid">
+        <div class="prompt-chip" data-copy="逆光剪影, backlit silhouette"><span class="chip-main">逆光剪影</span><span class="chip-sub">backlit silhouette</span></div>
+        <div class="prompt-chip" data-copy="侧光塑形, rim side lighting"><span class="chip-main">侧光塑形</span><span class="chip-sub">rim side lighting</span></div>
+        <div class="prompt-chip" data-copy="聚光戏剧, spotlight drama"><span class="chip-main">聚光戏剧</span><span class="chip-sub">spotlight drama</span></div>
+        <div class="prompt-chip" data-copy="柔光漫射, soft diffused light"><span class="chip-main">柔光漫射</span><span class="chip-sub">soft diffused light</span></div>
+        <div class="prompt-chip" data-copy="霓虹光污染, neon glow haze"><span class="chip-main">霓虹光污染</span><span class="chip-sub">neon glow haze</span></div>
+        <div class="prompt-chip" data-copy="金边轮廓光, golden rim light"><span class="chip-main">金边轮廓光</span><span class="chip-sub">golden rim light</span></div>
+        <div class="prompt-chip" data-copy="烛火暖光, candle warm light"><span class="chip-main">烛火暖光</span><span class="chip-sub">candle warm light</span></div>
+        <div class="prompt-chip" data-copy="月光冷辉, moonlit glow"><span class="chip-main">月光冷辉</span><span class="chip-sub">moonlit glow</span></div>
+        <div class="prompt-chip" data-copy="HDR 高动态, HDR high dynamic"><span class="chip-main">HDR 高动态</span><span class="chip-sub">HDR high dynamic</span></div>
+        <div class="prompt-chip" data-copy="体积光束, volumetric light beams"><span class="chip-main">体积光束</span><span class="chip-sub">volumetric light beams</span></div>
+        <div class="prompt-chip" data-copy="雾中光晕, misty halo glow"><span class="chip-main">雾中光晕</span><span class="chip-sub">misty halo glow</span></div>
+        <div class="prompt-chip" data-copy="强烈光影对比, high contrast chiaroscuro"><span class="chip-main">强烈光影对比</span><span class="chip-sub">high contrast chiaroscuro</span></div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="examples">
+      <h2>组合示例</h2>
+      <p class="prompt-desc">可直接复制整句，再根据需求替换主体或色彩。</p>
+      <div class="example-grid">
+        <div class="example-card">
+          <h4>赛博都市夜景</h4>
+          <code>epic grandeur, cyberpunk neon skyline, mech warrior, high saturation neon, dynamic diagonals, wide establishing shot, backlit silhouette, volumetric light beams</code>
+        </div>
+        <div class="example-card">
+          <h4>梦幻森林精灵</h4>
+          <code>dreamlike ethereal atmosphere, watercolor wash, elven queen, misty forest, pastel macarons palette, layered depth composition, medium shot, moonlit glow with misty halo</code>
+        </div>
+        <div class="example-card">
+          <h4>复古胶片街景</h4>
+          <code>vintage elegance, retro film grain, street performer, rainy street corner, warm sunset orange highlights, rule of thirds, full body shot, soft diffused light</code>
+        </div>
+        <div class="example-card">
+          <h4>史诗级太空战舰</h4>
+          <code>epic grandeur, oil painting texture, steampunk airship, interstellar desert, metallic gradient spectrum, golden spiral composition, extreme wide shot, HDR high dynamic lighting</code>
+        </div>
+      </div>
+    </section>
+
+    <p class="copy-hint">* 点击任意提示词即可复制，若浏览器无权限请手动选中复制。</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 AI 学习中心</span>
+      <span class="sep">·</span>
+      <a href="./index.html">首页</a>
+      <span class="sep">·</span>
+      <a href="./ai_painting_prompts.html">AI 绘画提示词</a>
+      <span class="sep">·</span>
+      <a href="./camera_movement.html">运镜提示词</a>
+    </div>
+  </footer>
+
+  <script src="./comfyui/main.js"></script>
+  <script>
+    document.querySelectorAll('.prompt-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        const text = this.getAttribute('data-copy');
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(() => {
+          this.dataset.original = this.dataset.original || this.innerHTML;
+          this.innerHTML = '<span class="chip-main">已复制</span><span class="chip-sub">copied</span>';
+          this.style.background = 'rgba(106, 162, 255, 0.22)';
+          setTimeout(() => {
+            this.innerHTML = this.dataset.original;
+            this.style.background = '';
+          }, 900);
+        }).catch(err => {
+          console.error('复制失败:', err);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
