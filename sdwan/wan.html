@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wan 系列教程（Wan2 / i2v）</title>
+  <meta name="description" content="Wan 系列教程：参数建议、中文提示词模板、i2v 视频、常见工作流、ControlNet 与优化。" />
+  <link rel="stylesheet" href="../comfyui/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">SD/Wan 学习站</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./sd.html" class="nav-link">SD 教程</a>
+        <a href="./wan.html" class="nav-link active">Wan 教程</a>
+        <a href="../models/index.html" class="nav-link">多模型教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container with-sidebar">
+    <aside class="sidebar">
+      <div class="toc">
+        <div class="toc-title">目录</div>
+        <a href="#intro">1. Wan 特点</a>
+        <a href="#quick">2. 快速参数</a>
+        <a href="#prompts">3. 中文提示词模板</a>
+        <a href="#workflows">4. 常见工作流</a>
+        <a href="#i2v">5. i2v 视频（Wan2.1）</a>
+        <a href="#controlnet">6. ControlNet/参考图</a>
+        <a href="#optimize">7. 优化建议</a>
+        <a href="#faq">8. FAQ</a>
+      </div>
+    </aside>
+
+    <article class="doc">
+      <h1>Wan 系列教程（Wan2 / i2v）</h1>
+      <p class="lead">主打中文友好与高观感出图，适合插画、国风、商业海报与 i2v 视频；同样建议用 ComfyUI 跑统一流程。</p>
+
+      <h2 id="intro">1. Wan 特点</h2>
+      <ul>
+        <li>中文解析强、默认审美统一，提示词成本低。</li>
+        <li>风格与卡通/插画友好，文生视频（i2v）可快速出片。</li>
+      </ul>
+
+      <h2 id="quick">2. 快速参数</h2>
+      <ul>
+        <li><strong>文生图：</strong>分辨率 1024，Steps 16–24，CFG 4–6，dpmpp_sde_karras。</li>
+        <li><strong>图生图：</strong>denoise 0.35–0.6；保留结构时配合 Canny/Lineart。</li>
+        <li><strong>一致性：</strong>固定 Seed；必要时锁词序与语义块。</li>
+      </ul>
+
+      <h2 id="prompts">3. 中文提示词模板</h2>
+      <pre class="code"><code>主体 + 场景/环境 + 构图/镜头 + 光线 + 风格/材质 + 颜色氛围 + 细节程度
+例：中近景人物，环形光，淡金暖色调，插画风格，衣纹与发丝细节清晰
+负面：多余手指，低清，噪点，水印，文字</code></pre>
+
+      <h2 id="workflows">4. 常见工作流</h2>
+      <ol>
+        <li><strong>文生图：</strong>Load Wan → 文本编码 → KSampler → VAE Decode → Save</li>
+        <li><strong>图生图：</strong>Image → VAE Encode → KSampler（denoise）→ VAE Decode → Save</li>
+        <li><strong>风格锁定：</strong>IP-Adapter 参考图 + LoRA（0.6–0.8）</li>
+      </ol>
+
+      <h2 id="i2v">5. i2v 视频（Wan2.1）</h2>
+      <ul>
+        <li>分辨率 1024×576/1024×1024；帧数 48–64；FPS 12–16。</li>
+        <li>Steps 24，CFG 5；motion 0.4–0.55；denoise 0.5–0.6；固定全部 seed（含 temporal）。</li>
+        <li>不稳时加 Pose/Lineart/Depth 任一作约束；动效词：trailing particles/glow。</li>
+      </ul>
+
+      <h2 id="controlnet">6. ControlNet/参考图</h2>
+      <ul>
+        <li>OpenPose（姿态/分镜）、Canny/Lineart（边缘/轮廓）、Depth（空间）。</li>
+        <li>IP-Adapter：锁风格/角色，多参考图混合更稳。</li>
+      </ul>
+
+      <h2 id="optimize">7. 优化建议</h2>
+      <ul>
+        <li>中文优先，短句分块，核心语义靠前；数字与数量加“exactly/仅/严格”约束。</li>
+        <li>保持分辨率与采样器一致；需要高清时，采用放大器 + 轻修复流程。</li>
+      </ul>
+
+      <h2 id="faq">8. FAQ</h2>
+      <details>
+        <summary>为什么数量类约束不稳定？</summary>
+        <p>叠加“6-fold symmetry / clock positions”等几何描述，并用负面词排除 5/7/8 等数量；必要时用参考草图。</p>
+      </details>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 SD/Wan 学习站</span>
+      <span class="sep">·</span>
+      <a href="./sd.html">SD 教程</a>
+      <span class="sep">·</span>
+      <a href="./wan.html">Wan 教程</a>
+      <span class="sep">·</span>
+      <a href="../models/index.html">多模型教程</a>
+    </div>
+  </footer>
+
+  <script src="../comfyui/main.js"></script>
+</body>
+</html>
+
+

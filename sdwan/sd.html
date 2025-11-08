@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stable Diffusion 教程（SDXL / SD3.5 / SD1.5）</title>
+  <meta name="description" content="Stable Diffusion 教程：SDXL、SD3.5 与 SD1.5 的安装、参数、提示词、常见工作流、ControlNet、LoRA 与优化。"/>
+  <link rel="stylesheet" href="../comfyui/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">SD/Wan 学习站</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./sd.html" class="nav-link active">SD 教程</a>
+        <a href="./wan.html" class="nav-link">Wan 教程</a>
+        <a href="../models/index.html" class="nav-link">多模型教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container with-sidebar">
+    <aside class="sidebar">
+      <div class="toc">
+        <div class="toc-title">目录</div>
+        <a href="#intro">1. 概览与差异</a>
+        <a href="#install">2. 安装与环境</a>
+        <a href="#params">3. 参数参考（按模型）</a>
+        <a href="#prompts">4. 提示词模板</a>
+        <a href="#workflows">5. 常见工作流（文/图/修补/放大）</a>
+        <a href="#controlnet">6. ControlNet 与参考图</a>
+        <a href="#lora">7. LoRA（使用与训练要点）</a>
+        <a href="#optimize">8. 质量与性能优化</a>
+        <a href="#faq">9. FAQ</a>
+      </div>
+    </aside>
+
+    <article class="doc">
+      <h1>Stable Diffusion 教程（SDXL / SD3.5 / SD1.5）</h1>
+      <p class="lead">统一以 ComfyUI 讲解，关注“可复用”的参数与节点组合；先用小分辨率验证，再放大到成片尺寸。</p>
+
+      <h2 id="intro">1. 概览与差异</h2>
+      <ul>
+        <li><strong>SD3.5：</strong>写实细节、复杂光影与一致性更强；英文提示更稳。</li>
+        <li><strong>SDXL：</strong>通用性强、生态丰富（Lora/ControlNet/放大器齐全）。</li>
+        <li><strong>SD1.5：</strong>资源占用低、社区素材最丰富，适合风格化与老工作流。</li>
+      </ul>
+
+      <h2 id="install">2. 安装与环境</h2>
+      <pre class="code"><code># 基础环境（与 ComfyUI 搭配）
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python -m venv venv
+venv\Scripts\activate
+pip install --upgrade pip
+# 依据显卡选择正确的 torch（示例 CUDA 12.1）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+python main.py --listen 0.0.0.0 --port 8188</code></pre>
+
+      <h2 id="params">3. 参数参考（按模型）</h2>
+      <ul>
+        <li><strong>SD3.5：</strong>Steps 22–32；CFG 5–7；Sampler dpmpp_sde_karras；分辨率 1024 起步。</li>
+        <li><strong>SDXL：</strong>Steps 20–28；CFG 5–7；常用 Karras 系列；分辨率 1024 起步。</li>
+        <li><strong>SD1.5：</strong>Steps 18–26；CFG 6–8；分辨率 768/896 起步，后期放大。</li>
+        <li><strong>Seed：</strong>先固定做 A/B；采样器与步数保持一致利于复现。</li>
+      </ul>
+
+      <h2 id="prompts">4. 提示词模板</h2>
+      <pre class="code"><code># 英文（SD/SDXL 更稳）
+close-up product render on white background, soft rim light,
+photorealistic, detailed material, subtle shadows, high contrast
+negative: lowres, blurry, artifacts, watermark, text
+
+# 中文（与英文混写）
+近景产品图，白底，柔和轮廓光，写实材质细节，微妙阴影，对比充足
+负面：低清，模糊，伪影，水印，文字</code></pre>
+
+      <h2 id="workflows">5. 常见工作流</h2>
+      <ol>
+        <li><strong>文生图：</strong>Load Checkpoint → CLIP Text Encode（正/负）→ Empty Latent → KSampler → VAE Decode → Save</li>
+        <li><strong>图生图：</strong>Image → VAE Encode → KSampler（denoise 0.3–0.6）→ VAE Decode → Save</li>
+        <li><strong>修补：</strong>Image + Mask → Inpaint Pipeline → Merge</li>
+        <li><strong>清晰路线：</strong>先 768/1024 → 放大（ESRGAN/4x-UltraSharp）→ 轻修复</li>
+      </ol>
+
+      <h2 id="controlnet">6. ControlNet 与参考图</h2>
+      <ul>
+        <li>OpenPose（人物/动态）、Canny/Lineart（轮廓）、Depth（空间/机位）、IP-Adapter（风格/参考）。</li>
+      </ul>
+
+      <h2 id="lora">7. LoRA</h2>
+      <ul>
+        <li>调用：&lt;lora:name:0.6–1.0&gt; 或 ComfyUI LoRA 节点；风格 0.6–0.8，角色 0.8–1.2。</li>
+        <li>训练：注意风格泄漏、学习率与正则，验证集对比很关键。</li>
+      </ul>
+
+      <h2 id="optimize">8. 质量与性能优化</h2>
+      <ul>
+        <li>显存有限：降低分辨率/批次；启用 fp16/xformers；合理 tile 放大。</li>
+        <li>稳定性：锁定采样器与种子；保存参数快照；版本保持一致。</li>
+      </ul>
+
+      <h2 id="faq">9. FAQ</h2>
+      <details>
+        <summary>为什么同样提示词结果差异大？</summary>
+        <p>检查采样器/步数/Seed 是否一致；是否引入了 ControlNet 或 LoRA 差异；版本差异也会影响输出。</p>
+      </details>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 SD/Wan 学习站</span>
+      <span class="sep">·</span>
+      <a href="./sd.html">SD 教程</a>
+      <span class="sep">·</span>
+      <a href="./wan.html">Wan 教程</a>
+      <span class="sep">·</span>
+      <a href="../models/index.html">多模型教程</a>
+    </div>
+  </footer>
+
+  <script src="../comfyui/main.js"></script>
+</body>
+</html>
+
+
