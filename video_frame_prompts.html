@@ -609,6 +609,159 @@
           <li><strong>ComfyUI + AnimateDiff</strong>：支持完整的多帧控制和一致性锁定</li>
         </ul>
       </div>
+
+      <h2 class="section-title" id="action-scenes">六、打斗场面首尾帧与多帧模板</h2>
+
+      <p>打斗场景的核心是“动作连续 + 冲击感强 + 运镜跟得上节奏”。下面的模板偏实战，可直接改主体后使用。</p>
+
+      <div class="tip-box">
+        <strong>打斗场面提示词要点：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>人物与空间</strong>：清楚写明是近身肉搏、远距离对射还是群战，交代场景空间（巷战 / 屋顶 / 广场 / 擂台）。</li>
+          <li><strong>动作连续性</strong>：用“连续、连贯、一气呵成”等词，避免每一帧都像独立插画。</li>
+          <li><strong>运镜风格</strong>：打斗推荐手持感、跟拍、快速摇移，而不是全程静态镜头。</li>
+          <li><strong>节奏控制</strong>：开场稍稳，中段加速，高潮处特写+抖动，收尾减速或定格。</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 1：街头群殴（约 6–7 秒）</h4>
+        <p><strong>首帧（0s）：街头对峙 + 空间交代</strong></p>
+        <code>first frame, medium wide shot, two gangs facing each other on a wet city street at night, neon reflections on the ground, tense atmosphere, static opening, cinematic lighting</code>
+        <p><strong>中文：</strong></p>
+        <code>首帧，中远景，夜晚湿漉漉的城市街头，两帮人对峙，地面反射霓虹灯光，气氛紧张，静态开场，电影级光影</code>
+
+        <p><strong>运镜（0-1s）：慢推入场</strong></p>
+        <code>slow dolly forward, slight handheld camera, subtle shake, smooth transition into the fight</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢推进，轻微手持感，细微抖动，平滑推进进入打斗区域</code>
+
+        <p><strong>关键帧1（1.5s）：第一轮冲撞</strong></p>
+        <code>key frame at 1.5s, medium shot, both sides rushing toward each other, bodies colliding, flying fists and kicks, dynamic diagonals, impact shake</code>
+        <p><strong>中文：</strong></p>
+        <code>1.5秒关键帧，中景，双方同时冲上去爆发第一轮冲撞，拳脚飞舞，身体互相撞击，动感斜线构图，冲击感抖动</code>
+
+        <p><strong>关键帧2（3s）：混战中段</strong></p>
+        <code>key frame at 3s, medium close-up, several people beating one main fighter, fast tracking shot, handheld feeling, motion blur on fast punches</code>
+        <p><strong>中文：</strong></p>
+        <code>3秒关键帧，中近景，几个人围攻主角，快速跟踪运镜，明显手持感，快速出拳带有运动模糊</code>
+
+        <p><strong>尾帧（6–7s）：终结一击 + 收尾</strong></p>
+        <code>final frame, slow motion, close-up of the finishing blow, freeze frame at the peak moment, then wide closing shot of the alley with bodies on the ground</code>
+        <p><strong>中文：</strong></p>
+        <code>结尾帧，慢动作，终结一击的特写，在动作最高点定格，然后切到巷子中远景收尾，几人倒地，主角站在画面中央</code>
+
+        <p><strong>整体运镜提示词（可附在主提示尾部）：</strong></p>
+        <code>handheld camera, fast tracking shot between fighters, whip pan across the brawl, impact shake on hits, dynamic close-ups, smooth but energetic camera movement</code>
+        <p><strong>中文：</strong></p>
+        <code>手持感镜头，在打斗人群之间快速跟拍，甩摇横扫整个群殴场面，击中瞬间冲击抖动，动态特写，平滑但有爆发力的运镜节奏</code>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 2：屋顶剑斗（约 6–7 秒）</h4>
+        <p><strong>首帧（0s）：屋顶远景 + 对峙</strong></p>
+        <code>first frame, wide establishing shot of a rooftop at night, two sword fighters standing apart, city lights in the background, strong backlight, static opening, realistic cinematic style</code>
+        <p><strong>中文：</strong></p>
+        <code>首帧，夜色屋顶远景定场，两名持剑剑士相距而立，背景是朦胧城市灯光，强烈逆光，静态开场，写实电影感</code>
+
+        <p><strong>中间智能多帧提示（可拆成 3–5 帧）：</strong></p>
+        <code>key frame at 1s, blades clashing in sparks, close-up, whip pan following the swords
+mid frame, 2s, medium shot, fighters circling each other, handheld camera, dynamic diagonals
+key frame at 3.5s, slow motion, decisive strike, extreme close-up on the blade and eyes, impact shake</code>
+        <p><strong>中文：</strong></p>
+        <code>1秒关键帧，刀锋相碰火花四溅的特写，甩摇跟随刀身运动
+2秒中间帧，中景，两人缓慢绕圈对峙，手持感镜头，动感斜线构图
+3.5秒关键帧，慢动作，决定性一击的超特写，刀锋与眼神同框，冲击感抖动</code>
+
+        <p><strong>尾帧与运镜：</strong></p>
+        <code>final frame, wide closing shot, one fighter standing and the other on the ground, slow dolly back, fade to black</code>
+        <p><strong>中文：</strong></p>
+        <code>结尾帧，远景收尾，一人站立一人倒地，缓慢拉远，淡出至黑场</code>
+      </div>
+
+      <div class="tip-box">
+        <strong>打斗场景推荐运镜词速记：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>冲击感</strong>：impact shake, camera shake, motion blur（冲击抖动、机位抖动、运动模糊）</li>
+          <li><strong>紧张感</strong>：handheld camera, shaky cam, fast tracking shot（手持镜头、轻微抖动、快速跟拍）</li>
+          <li><strong>速度感</strong>：whip pan, fast pan, fast zoom in/out（甩摇、快速摇摄、快速变焦）</li>
+          <li><strong>高潮特写</strong>：dynamic close-up, extreme close-up on impact（动态特写、冲击瞬间超特写）</li>
+        </ul>
+      </div>
+
+      <h2 class="section-title" id="epic-scenes">七、宏大场面首尾帧与多帧模板</h2>
+
+      <p>宏大场面重点是“空间尺度 + 人物渺小对比 + 稳定而有层次的运镜”，适合战争、城市、星空、史诗场景。</p>
+
+      <div class="tip-box">
+        <strong>宏大场面提示词要点：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>先立规模</strong>：使用 wide / extreme wide shot、aerial shot、bird's-eye view 等词突出尺度。</li>
+          <li><strong>再落人物</strong>：在关键帧用中景/近景把人物拉近，建立情感链接。</li>
+          <li><strong>运镜尽量“稳中有变”</strong>：以缓慢推进、拉远、环绕为主，避免频繁抖动破坏史诗感。</li>
+          <li><strong>多帧统一色调</strong>：比如“冷蓝战场”、“金色夕阳”、“厚重云层”等，在每一帧重复。</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 1：古代万人战场（约 6–8 秒）</h4>
+        <p><strong>首帧（0s）：战场超远景定场</strong></p>
+        <code>first frame, extreme wide shot of an ancient battlefield with tens of thousands of soldiers, dense formations and flags, war horses, dust and smoke, heavy clouds, cinematic color grading, static opening</code>
+        <p><strong>中文：</strong></p>
+        <code>首帧，古代万人战场的超远景，全军密集军阵与旌旗，战马奔腾，尘土与烟雾弥漫，天空乌云厚重，电影级调色，静态开场</code>
+
+        <p><strong>运镜（0-2s）：缓慢俯视推进</strong></p>
+        <code>aerial bird's-eye shot, slow crane down, slow dolly forward over the battlefield, smooth camera movement</code>
+        <p><strong>中文：</strong></p>
+        <code>航拍鸟瞰视角，缓慢下降摇臂镜头，缓慢推进掠过战场上空，平滑运镜</code>
+
+        <p><strong>关键帧1（3s）：前线近景交锋</strong></p>
+        <code>key frame at 3s, medium shot of soldiers clashing with spears and shields, dynamic diagonals, dust and debris flying in the air</code>
+        <p><strong>中文：</strong></p>
+        <code>3秒关键帧，中景，前线士兵长矛与盾牌激烈交锋，动感斜线构图，空气中尘土与碎屑飞散</code>
+
+        <p><strong>关键帧2（5s）：主将特写高潮</strong></p>
+        <code>key frame at 5s, close-up of the commander shouting on horseback, slow push in, dramatic lighting, shallow depth of field</code>
+        <p><strong>中文：</strong></p>
+        <code>5秒关键帧，主将在马上怒吼的特写，缓慢推进，戏剧性光影，浅景深</code>
+
+        <p><strong>尾帧（7-8s）：拉远收束战场规模</strong></p>
+        <code>final frame, wide closing shot, battlefield seen from above, slow dolly back, fade to black</code>
+        <p><strong>中文：</strong></p>
+        <code>结尾帧，再次航拍俯视整个战场的远景收尾，缓慢拉远，淡出黑场</code>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 2：科幻城市追逐（约 6–8 秒）</h4>
+        <p><strong>首帧：</strong></p>
+        <code>first frame, wide establishing shot of a futuristic city skyline at night, neon lights, multilayer flying lanes, several flying vehicles, static opening, panoramic sweep</code>
+        <p><strong>中文：</strong></p>
+        <code>首帧，未来科幻城市夜晚天际线远景定场，霓虹灯高楼林立，多层空中车道，几辆飞行载具穿梭，静态开场，全景环视感</code>
+
+        <p><strong>中间智能多帧（追逐过程）：</strong></p>
+        <code>key frame at 2s, aerial shot diving between skyscrapers along the chase path, smooth but fast camera movement
+mid frame, 3.5s, tight tracking shot following the main flying vehicle, dynamic diagonals, motion blur
+key frame at 5s, medium shot of the main character inside or on top of the vehicle, wind blowing, slow push in</code>
+        <p><strong>中文：</strong></p>
+        <code>2秒关键帧，航拍视角沿着追逐路线俯冲穿梭高楼之间，平滑但快速的运镜
+3.5秒中间帧，紧贴主飞行载具的跟拍，动感斜线构图，背景带运动模糊
+5秒关键帧，中景，主角在车内或车顶，风吹衣袂，缓慢推进</code>
+
+        <p><strong>尾帧与运镜：</strong></p>
+        <code>final frame, wide closing shot of the entire city with light trails of the chase, slow dolly back, slight tilt up to the starry sky, static ending</code>
+        <p><strong>中文：</strong></p>
+        <code>结尾帧，整座城市的远景收尾，追逐留下的光轨在城市上空划出线条，镜头缓慢拉远，轻微上仰至星空，静态结尾</code>
+      </div>
+
+      <div class="tip-box">
+        <strong>宏大场面推荐运镜词速记：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>建立规模</strong>：aerial shot, bird's-eye view, extreme wide shot, panoramic sweep（航拍视角、鸟瞰、超远景、环视全景）</li>
+          <li><strong>空间层次</strong>：slow crane up/down, layered depth, foreground/midground/background（缓慢升降摇臂、前中后景层次）</li>
+          <li><strong>史诗感</strong>：slow dolly forward/back, smooth camera movement, cinematic composition（缓慢推拉、平滑运镜、电影构图）</li>
+          <li><strong>尾帧收束</strong>：wide closing shot, slow dolly back, fade to black（远景收尾，缓慢拉远，淡出黑场）</li>
+        </ul>
+      </div>
     </section>
   </main>
 
