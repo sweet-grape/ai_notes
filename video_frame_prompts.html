@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 视频首尾帧与智能多帧提示词技巧</title>
+  <meta name="description" content="AI 视频制作首尾帧与智能多帧提示词技巧：开场帧、结尾帧、关键帧、帧间一致性、运镜衔接等完整指南" />
+  <link rel="stylesheet" href="./comfyui/style.css" />
+  <style>
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .prompt-tag {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 14px;
+      background: rgba(106, 162, 255, 0.1);
+      border: 1px solid rgba(106, 162, 255, 0.3);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 60px;
+      justify-content: space-between;
+    }
+    .prompt-tag:hover {
+      background: rgba(106, 162, 255, 0.2);
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+    .prompt-tag:active {
+      transform: translateY(0);
+    }
+    .prompt-en {
+      font-weight: 500;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+    .prompt-zh {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .copy-btns {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .copy-btn-small {
+      padding: 3px 6px;
+      font-size: 10px;
+      background: rgba(106, 162, 255, 0.15);
+      border: 1px solid rgba(106, 162, 255, 0.3);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .section-title {
+      margin-top: 40px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .example-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .example-box h4 {
+      margin-top: 0;
+      color: var(--brand);
+    }
+    .example-box p {
+      margin: 8px 0;
+    }
+    .example-box code {
+      display: block;
+      background: rgba(106, 162, 255, 0.1);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .tip-box {
+      background: rgba(106, 162, 255, 0.08);
+      border-left: 3px solid var(--brand);
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    .tip-box strong {
+      color: var(--brand);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    table th {
+      background: rgba(106, 162, 255, 0.1);
+      font-weight: 600;
+      color: var(--brand);
+    }
+    table tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI 学习中心</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html#catalog" class="nav-link" data-home-catalog>返回首页目录</a>
+        <a href="./index.html" class="nav-link">首页</a>
+        <a href="./ai_painting_prompts.html" class="nav-link">AI 绘画提示词</a>
+        <a href="./camera_movement.html" class="nav-link">运镜提示词</a>
+        <a href="./video_frame_prompts.html" class="nav-link active">视频帧技巧</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
+        <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>AI 视频首尾帧与智能多帧提示词技巧</h1>
+      <p class="subtitle">掌握首尾帧设计与多帧一致性控制，打造流畅连贯的 AI 视频</p>
+    </section>
+
+    <section class="doc">
+      <h2 id="intro">使用说明</h2>
+      <p>AI 视频制作中，首尾帧的设计和多帧一致性控制是决定视频质量的关键因素。本指南将帮助你掌握如何通过提示词精确控制视频的开场、结尾和中间帧，并结合运镜技巧实现流畅的视觉叙事。</p>
+      
+      <div class="tip-box">
+        <strong>核心原则：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>首尾呼应</strong>：开场帧与结尾帧应在视觉或叙事上形成呼应</li>
+          <li><strong>帧间过渡</strong>：关键帧之间应保持视觉连贯性，避免突兀跳跃</li>
+          <li><strong>运镜衔接</strong>：运镜动作应与帧内容匹配，形成自然的视觉流动</li>
+          <li><strong>一致性锁定</strong>：使用固定 seed、统一风格描述确保多帧一致性</li>
+        </ul>
+      </div>
+
+      <h2 class="section-title" id="first-frame">一、首帧（开场帧）提示词技巧</h2>
+      
+      <h3>1.1 开场帧的定位与作用</h3>
+      <p>首帧是视频的第一印象，需要快速建立场景、氛围和叙事基调。好的首帧应该：</p>
+      <ul>
+        <li>快速建立视觉焦点和场景环境</li>
+        <li>暗示后续动作或情节发展</li>
+        <li>与运镜动作形成良好配合</li>
+        <li>为整段视频设定风格基调</li>
+      </ul>
+
+      <h3>1.2 首帧提示词模板</h3>
+      <div class="prompt-grid">
+        <div class="prompt-tag" data-en="establishing shot" data-zh="定场镜头">
+          <span class="prompt-en">establishing shot</span>
+          <span class="prompt-zh">定场镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="opening frame" data-zh="开场帧">
+          <span class="prompt-en">opening frame</span>
+          <span class="prompt-zh">开场帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="first frame" data-zh="首帧">
+          <span class="prompt-en">first frame</span>
+          <span class="prompt-zh">首帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="wide establishing shot" data-zh="远景定场">
+          <span class="prompt-en">wide establishing shot</span>
+          <span class="prompt-zh">远景定场</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="static opening" data-zh="静态开场">
+          <span class="prompt-en">static opening</span>
+          <span class="prompt-zh">静态开场</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="fade in from black" data-zh="从黑场淡入">
+          <span class="prompt-en">fade in from black</span>
+          <span class="prompt-zh">从黑场淡入</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>1.3 首帧与运镜结合示例</h3>
+      <div class="example-box">
+        <h4>示例 1：远景定场 + 推进运镜</h4>
+        <p><strong>首帧提示词：</strong></p>
+        <code>wide establishing shot, mountain landscape, morning mist, static frame, cinematic composition, rule of thirds</code>
+        <p><strong>中文：</strong></p>
+        <code>远景定场，山景，晨雾，静态帧，电影构图，三分法</code>
+        <p><strong>运镜提示词：</strong></p>
+        <code>slow dolly forward, smooth camera movement, gradual zoom in</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢推进，平滑运镜，逐渐放大</code>
+        <p><strong>说明：</strong>从远景静态开场，通过缓慢推进逐渐聚焦到主体，形成自然的视觉引导。</p>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 2：特写开场 + 拉远运镜</h4>
+        <p><strong>首帧提示词：</strong></p>
+        <code>extreme close-up, character's eyes, shallow depth of field, static opening frame, dramatic lighting</code>
+        <p><strong>中文：</strong></p>
+        <code>超特写，角色眼睛，浅景深，静态开场帧，戏剧性光影</code>
+        <p><strong>运镜提示词：</strong></p>
+        <code>slow dolly back, pull out, reveal wider scene</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢拉远，拉出，展现更广场景</code>
+        <p><strong>说明：</strong>从细节特写开始，通过拉远揭示完整场景，制造悬念和视觉惊喜。</p>
+      </div>
+
+      <h2 class="section-title" id="last-frame">二、尾帧（结尾帧）提示词技巧</h2>
+      
+      <h3>2.1 结尾帧的设计原则</h3>
+      <p>结尾帧需要给观众留下深刻印象，通常有以下几种设计思路：</p>
+      <ul>
+        <li><strong>呼应开场</strong>：与首帧形成视觉或叙事呼应</li>
+        <li><strong>定格强调</strong>：通过静态定格突出关键瞬间</li>
+        <li><strong>开放结局</strong>：留下想象空间，暗示后续发展</li>
+        <li><strong>情绪收束</strong>：通过画面情绪完成叙事闭环</li>
+      </ul>
+
+      <h3>2.2 尾帧提示词模板</h3>
+      <div class="prompt-grid">
+        <div class="prompt-tag" data-en="final frame" data-zh="结尾帧">
+          <span class="prompt-en">final frame</span>
+          <span class="prompt-zh">结尾帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="closing shot" data-zh="收尾镜头">
+          <span class="prompt-en">closing shot</span>
+          <span class="prompt-zh">收尾镜头</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="freeze frame" data-zh="定格帧">
+          <span class="prompt-en">freeze frame</span>
+          <span class="prompt-zh">定格帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="static ending" data-zh="静态结尾">
+          <span class="prompt-en">static ending</span>
+          <span class="prompt-zh">静态结尾</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="fade to black" data-zh="淡出至黑场">
+          <span class="prompt-en">fade to black</span>
+          <span class="prompt-zh">淡出至黑场</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="wide closing shot" data-zh="远景收尾">
+          <span class="prompt-en">wide closing shot</span>
+          <span class="prompt-zh">远景收尾</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>2.3 尾帧与运镜结合示例</h3>
+      <div class="example-box">
+        <h4>示例 1：拉远收尾 + 静态定格</h4>
+        <p><strong>尾帧提示词：</strong></p>
+        <code>wide closing shot, character walking away, static final frame, cinematic composition, golden hour lighting</code>
+        <p><strong>中文：</strong></p>
+        <code>远景收尾，角色走远，静态结尾帧，电影构图，黄金时刻光影</code>
+        <p><strong>运镜提示词：</strong></p>
+        <code>slow dolly back, pull out to wide, static ending, fade to black</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢拉远，拉出至远景，静态结尾，淡出至黑场</code>
+        <p><strong>说明：</strong>通过拉远运镜配合静态定格，形成情绪收束，最后淡出至黑场完成叙事。</p>
+      </div>
+
+      <div class="example-box">
+        <h4>示例 2：推进收尾 + 定格强调</h4>
+        <p><strong>尾帧提示词：</strong></p>
+        <code>close-up final frame, character's expression, freeze frame, dramatic lighting, shallow depth of field</code>
+        <p><strong>中文：</strong></p>
+        <code>特写结尾帧，角色表情，定格帧，戏剧性光影，浅景深</code>
+        <p><strong>运镜提示词：</strong></p>
+        <code>slow push in, dolly forward to close-up, freeze frame, static ending</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢推进，推近至特写，定格帧，静态结尾</code>
+        <p><strong>说明：</strong>通过推进运镜聚焦到关键表情，定格强调情绪高潮，形成强烈视觉冲击。</p>
+      </div>
+
+      <h2 class="section-title" id="multi-frame">三、智能多帧提示词技巧</h2>
+      
+      <h3>3.1 关键帧设计</h3>
+      <p>关键帧是视频中的转折点或重要瞬间，需要明确标注和精心设计：</p>
+      <ul>
+        <li><strong>关键动作帧</strong>：标注重要动作或转折点</li>
+        <li><strong>情绪高潮帧</strong>：标注情绪或叙事的高潮时刻</li>
+        <li><strong>场景转换帧</strong>：标注场景或视角的转换点</li>
+        <li><strong>运镜转折帧</strong>：标注运镜方向或速度的变化点</li>
+      </ul>
+
+      <h3>3.2 关键帧提示词</h3>
+      <div class="prompt-grid">
+        <div class="prompt-tag" data-en="key frame" data-zh="关键帧">
+          <span class="prompt-en">key frame</span>
+          <span class="prompt-zh">关键帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="mid frame" data-zh="中间帧">
+          <span class="prompt-en">mid frame</span>
+          <span class="prompt-zh">中间帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="transition frame" data-zh="过渡帧">
+          <span class="prompt-en">transition frame</span>
+          <span class="prompt-zh">过渡帧</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="frame consistency" data-zh="帧间一致性">
+          <span class="prompt-en">frame consistency</span>
+          <span class="prompt-zh">帧间一致性</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="temporal consistency" data-zh="时间一致性">
+          <span class="prompt-en">temporal consistency</span>
+          <span class="prompt-zh">时间一致性</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+        <div class="prompt-tag" data-en="smooth transition" data-zh="平滑过渡">
+          <span class="prompt-en">smooth transition</span>
+          <span class="prompt-zh">平滑过渡</span>
+          <div class="copy-btns">
+            <span class="copy-btn-small" data-copy="en">英文</span>
+            <span class="copy-btn-small" data-copy="zh">中文</span>
+            <span class="copy-btn-small" data-copy="both">双语</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>3.3 帧间一致性控制技巧</h3>
+      <div class="tip-box">
+        <strong>确保帧间一致性的关键方法：</strong>
+        <ol style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>固定 Seed</strong>：使用相同的 seed 值确保风格一致</li>
+          <li><strong>统一风格描述</strong>：在所有帧中使用相同的风格、色调、光影描述</li>
+          <li><strong>渐进式变化</strong>：使用渐进式描述（如 "gradually", "slowly"）而非突变</li>
+          <li><strong>锁定关键元素</strong>：使用 ControlNet 锁定人物姿态、场景结构等</li>
+          <li><strong>时间标记</strong>：使用时间标记（如 "at 0s", "at 2s"）明确帧的时间位置</li>
+        </ol>
+      </div>
+
+      <h3>3.4 多帧提示词模板</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>帧类型</th>
+            <th>英文提示词模板</th>
+            <th>中文提示词模板</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>首帧</td>
+            <td>first frame, establishing shot, [场景描述], static opening, [风格]</td>
+            <td>首帧，定场镜头，[场景描述]，静态开场，[风格]</td>
+            <td>建立场景和基调</td>
+          </tr>
+          <tr>
+            <td>关键帧1</td>
+            <td>key frame at 2s, [动作/转折], smooth transition, [运镜]</td>
+            <td>2秒关键帧，[动作/转折]，平滑过渡，[运镜]</td>
+            <td>标注重要转折点</td>
+          </tr>
+          <tr>
+            <td>中间帧</td>
+            <td>mid frame, [渐进变化], frame consistency, [运镜]</td>
+            <td>中间帧，[渐进变化]，帧间一致性，[运镜]</td>
+            <td>保持视觉连贯</td>
+          </tr>
+          <tr>
+            <td>关键帧2</td>
+            <td>key frame at 4s, [高潮/转折], smooth transition, [运镜]</td>
+            <td>4秒关键帧，[高潮/转折]，平滑过渡，[运镜]</td>
+            <td>标注情绪高潮</td>
+          </tr>
+          <tr>
+            <td>尾帧</td>
+            <td>final frame, closing shot, [收尾描述], static ending, [风格]</td>
+            <td>结尾帧，收尾镜头，[收尾描述]，静态结尾，[风格]</td>
+            <td>完成叙事闭环</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-title" id="camera-integration">四、首尾帧与运镜结合建议</h2>
+      
+      <h3>4.1 开场运镜策略</h3>
+      <div class="example-box">
+        <h4>策略 1：静态开场 + 缓慢启动</h4>
+        <p><strong>适用场景：</strong>需要建立氛围、展示环境的场景</p>
+        <p><strong>首帧：</strong>static opening, wide establishing shot, [场景]</p>
+        <p><strong>运镜：</strong>slow dolly forward / slow pan / slow zoom in</p>
+        <p><strong>效果：</strong>从静态画面开始，逐渐引入动感，给观众适应时间</p>
+      </div>
+
+      <div class="example-box">
+        <h4>策略 2：动态开场 + 快速切入</h4>
+        <p><strong>适用场景：</strong>需要快速抓住注意力、营造紧张感的场景</p>
+        <p><strong>首帧：</strong>dynamic opening, close-up, [主体动作]</p>
+        <p><strong>运镜：</strong>rapid dolly forward / quick pan / fast zoom</p>
+        <p><strong>效果：</strong>快速建立视觉冲击，立即进入叙事节奏</p>
+      </div>
+
+      <h3>4.2 收尾运镜策略</h3>
+      <div class="example-box">
+        <h4>策略 1：拉远收尾 + 静态定格</h4>
+        <p><strong>适用场景：</strong>需要情绪收束、留下余韵的场景</p>
+        <p><strong>尾帧：</strong>wide closing shot, static final frame, [收尾画面]</p>
+        <p><strong>运镜：</strong>slow dolly back, pull out to wide, static ending, fade to black</p>
+        <p><strong>效果：</strong>通过拉远和定格，形成情绪收束和视觉闭环</p>
+      </div>
+
+      <div class="example-box">
+        <h4>策略 2：推进收尾 + 定格强调</h4>
+        <p><strong>适用场景：</strong>需要强调关键瞬间、制造冲击的场景</p>
+        <p><strong>尾帧：</strong>close-up final frame, freeze frame, [关键表情/动作]</p>
+        <p><strong>运镜：</strong>slow push in, dolly forward to close-up, freeze frame</p>
+        <p><strong>效果：</strong>通过推进和定格，强化关键瞬间的视觉冲击</p>
+      </div>
+
+      <h3>4.3 多帧运镜衔接技巧</h3>
+      <div class="tip-box">
+        <strong>运镜衔接的核心原则：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>速度匹配</strong>：相邻帧的运镜速度应保持一致或渐进变化</li>
+          <li><strong>方向连贯</strong>：避免运镜方向的突然反转，使用平滑过渡</li>
+          <li><strong>节奏控制</strong>：根据叙事节奏调整运镜速度，高潮时加速，平静时减速</li>
+          <li><strong>停顿设计</strong>：在关键帧处适当停顿，给观众消化时间</li>
+        </ul>
+      </div>
+
+      <h3>4.4 完整示例：首尾帧 + 多帧 + 运镜</h3>
+      <div class="example-box">
+        <h4>示例：人物行走场景（5秒视频）</h4>
+        <p><strong>首帧（0s）：</strong></p>
+        <code>first frame, wide establishing shot, character in distance, mountain path, morning mist, static opening, cinematic composition</code>
+        <p><strong>中文：</strong></p>
+        <code>首帧，远景定场，远处人物，山间小径，晨雾，静态开场，电影构图</code>
+        
+        <p><strong>运镜（0-1s）：</strong></p>
+        <code>slow dolly forward, smooth camera movement, gradual zoom in</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢推进，平滑运镜，逐渐放大</code>
+
+        <p><strong>关键帧1（2s）：</strong></p>
+        <code>key frame at 2s, medium shot, character walking, smooth transition, frame consistency, slow tracking shot</code>
+        <p><strong>中文：</strong></p>
+        <code>2秒关键帧，中景，人物行走，平滑过渡，帧间一致性，缓慢跟踪</code>
+
+        <p><strong>关键帧2（3.5s）：</strong></p>
+        <code>key frame at 3.5s, close-up, character's expression, smooth transition, slow push in</code>
+        <p><strong>中文：</strong></p>
+        <code>3.5秒关键帧，特写，角色表情，平滑过渡，缓慢推进</code>
+
+        <p><strong>尾帧（5s）：</strong></p>
+        <code>final frame, extreme close-up, character's eyes, freeze frame, static ending, dramatic lighting, fade to black</code>
+        <p><strong>中文：</strong></p>
+        <code>结尾帧，超特写，角色眼睛，定格帧，静态结尾，戏剧性光影，淡出至黑场</code>
+
+        <p><strong>运镜（4-5s）：</strong></p>
+        <code>slow dolly forward to extreme close-up, freeze frame, static ending, fade to black</code>
+        <p><strong>中文：</strong></p>
+        <code>缓慢推进至超特写，定格帧，静态结尾，淡出至黑场</code>
+
+        <p><strong>一致性控制：</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li>固定 seed 值确保风格一致</li>
+          <li>统一使用 "cinematic", "morning mist", "mountain path" 等描述</li>
+          <li>所有帧使用相同的色调和光影风格</li>
+          <li>使用 ControlNet 锁定人物姿态和场景结构</li>
+        </ul>
+      </div>
+
+      <h2 class="section-title" id="best-practices">五、最佳实践总结</h2>
+      
+      <div class="example-box">
+        <h4>首尾帧设计检查清单</h4>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li>✓ 首帧是否快速建立了场景和氛围？</li>
+          <li>✓ 首帧是否与运镜动作形成良好配合？</li>
+          <li>✓ 尾帧是否与首帧形成视觉或叙事呼应？</li>
+          <li>✓ 尾帧是否给观众留下深刻印象？</li>
+          <li>✓ 首尾帧的运镜是否自然流畅？</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <h4>多帧一致性控制检查清单</h4>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li>✓ 是否使用了固定的 seed 值？</li>
+          <li>✓ 所有帧是否使用了统一的风格描述？</li>
+          <li>✓ 关键帧之间的过渡是否平滑？</li>
+          <li>✓ 是否使用了 ControlNet 锁定关键元素？</li>
+          <li>✓ 运镜速度是否保持一致或渐进变化？</li>
+          <li>✓ 是否避免了突兀的视觉跳跃？</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <h4>运镜衔接检查清单</h4>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li>✓ 运镜速度是否与叙事节奏匹配？</li>
+          <li>✓ 相邻帧的运镜方向是否连贯？</li>
+          <li>✓ 关键帧处是否设计了适当的停顿？</li>
+          <li>✓ 首尾帧的运镜是否与内容匹配？</li>
+          <li>✓ 是否避免了运镜方向的突然反转？</li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <strong>工具推荐：</strong>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+          <li><strong>Runway Gen-2</strong>：支持首尾帧指定和多帧一致性控制</li>
+          <li><strong>Pika Labs</strong>：支持关键帧标注和运镜提示词</li>
+          <li><strong>Stable Video Diffusion</strong>：需要配合 ControlNet 实现精确控制</li>
+          <li><strong>ComfyUI + AnimateDiff</strong>：支持完整的多帧控制和一致性锁定</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 AI 学习中心</span>
+      <span class="sep">·</span>
+      <a href="./index.html">首页</a>
+      <span class="sep">·</span>
+      <a href="./ai_painting_prompts.html">AI 绘画提示词</a>
+      <span class="sep">·</span>
+      <a href="./camera_movement.html">运镜提示词</a>
+      <span class="sep">·</span>
+      <a href="./video_frame_prompts.html">视频帧技巧</a>
+    </div>
+  </footer>
+
+  <script src="./comfyui/main.js"></script>
+  <script>
+    // 复制功能
+    document.querySelectorAll('.prompt-tag').forEach(tag => {
+      const copyBtns = tag.querySelectorAll('.copy-btn-small');
+      const enText = tag.getAttribute('data-en');
+      const zhText = tag.getAttribute('data-zh');
+      
+      copyBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          let textToCopy = '';
+          const copyType = this.getAttribute('data-copy');
+          
+          if (copyType === 'en') {
+            textToCopy = enText;
+          } else if (copyType === 'zh') {
+            textToCopy = zhText;
+          } else if (copyType === 'both') {
+            textToCopy = `${enText}, ${zhText}`;
+          }
+          
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            const original = this.textContent;
+            this.textContent = '已复制';
+            this.style.background = 'rgba(106, 162, 255, 0.3)';
+            setTimeout(() => {
+              this.textContent = original;
+              this.style.background = '';
+            }, 800);
+          }).catch(err => {
+            console.error('复制失败:', err);
+          });
+        });
+      });
+      
+      // 点击整个标签复制英文
+      tag.addEventListener('click', function() {
+        navigator.clipboard.writeText(enText).then(() => {
+          const original = tag.style.background;
+          tag.style.background = 'rgba(106, 162, 255, 0.25)';
+          setTimeout(() => {
+            tag.style.background = original;
+          }, 300);
+        }).catch(err => {
+          console.error('复制失败:', err);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
