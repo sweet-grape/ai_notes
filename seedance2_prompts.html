@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seedance 2.0 提示词技巧与学习方案</title>
+  <meta name="description" content="Seedance 2.0 提示词写法：通用公式、避坑、分阶段学习方案与模板示例，配合运镜与视频帧知识" />
+  <link rel="stylesheet" href="./comfyui/style.css" />
+  <style>
+    .section-title {
+      margin-top: 40px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .example-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .example-box h4 {
+      margin-top: 0;
+      color: var(--brand);
+    }
+    .tip-box {
+      background: rgba(106, 162, 255, 0.08);
+      border-left: 3px solid var(--brand);
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    .tip-box strong { color: var(--brand); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+    table th, table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    table th {
+      background: rgba(106, 162, 255, 0.1);
+      font-weight: 600;
+      color: var(--brand);
+    }
+    table tr:last-child td { border-bottom: none; }
+    .table-scroll { overflow-x: auto; margin: 16px 0; }
+    pre.template-block {
+      background: rgba(106, 162, 255, 0.08);
+      border: 1px solid rgba(106, 162, 255, 0.25);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .toc-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin: 16px 0 24px;
+      padding: 14px 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .toc-inline a { color: var(--brand); text-decoration: none; }
+    .toc-inline a:hover { text-decoration: underline; }
+    .muted-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .doc ol.study-weeks li { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI 学习中心</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html#catalog" class="nav-link" data-home-catalog>首页</a>
+        <a href="./ai_painting_prompts.html" class="nav-link">AI 绘画提示词</a>
+        <a href="./camera_movement.html" class="nav-link">运镜提示词</a>
+        <a href="./video_frame_prompts.html" class="nav-link">视频帧技巧</a>
+        <a href="./lapian.html" class="nav-link">拉片学习</a>
+        <a href="./seedance2_prompts.html" class="nav-link active">Seedance 2.0</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
+        <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Seedance 2.0 提示词技巧</h1>
+      <p class="subtitle">把「写什么」想清楚，比堆关键词更重要：通用公式、避坑、分阶段练习与可复制模板</p>
+    </section>
+
+    <section class="doc">
+      <nav class="toc-inline" aria-label="本页目录">
+        <a href="#about">模型与说明</a>
+        <a href="#mindset">怎么思考</a>
+        <a href="#formula">通用公式</a>
+        <a href="#best">写出好效果</a>
+        <a href="#pitfalls">常见误区</a>
+        <a href="#plan">学习方案</a>
+        <a href="#templates">模板示例</a>
+        <a href="#refs">参考链接</a>
+      </nav>
+
+      <h2 id="about">Seedance 2.0 是什么、本文怎么用</h2>
+      <p><strong>Seedance 2.0</strong> 是字节跳动发布的视频生成大模型方向产品之一，强调多模态参考（图 / 视频 / 音频等，视具体接入产品而定）、音画一体与较高可控性。你在<strong>即梦、剪映相关能力、火山引擎文档</strong>等渠道看到的「Seedance」即属同一家族，但<strong>界面按钮、是否支持首帧图、时长上限会随版本变化</strong>。</p>
+      <div class="tip-box">
+        <strong>阅读约定：</strong>本文讲的是<strong>提示词思路与结构</strong>，不替代官方参数说明。若某条与你当前使用的 App 不一致，以<strong>产品内说明与更新日志</strong>为准。可与本站 <a href="./camera_movement.html">运镜提示词</a>、<a href="./video_frame_prompts.html">视频帧技巧</a> 对照使用。
+      </div>
+
+      <h2 class="section-title" id="mindset">先建立判断：好提示词在解决哪几件事</h2>
+      <p>视频模型一次要同时猜「画什么、怎么动、多快、什么光、什么镜头」。提示词的作用，是把这几件事<strong>排好优先级</strong>，并避免互相打架。</p>
+      <ol>
+        <li><strong>单一主角任务</strong>：一句话里先让人听懂「谁 / 在干什么」，再补环境。</li>
+        <li><strong>动作可执行</strong>：用身体能做出来的小动作（转头、伸手、走路），比抽象形容词更稳。</li>
+        <li><strong>节奏与幅度</strong>：偏「慢、顺、稳」的描述通常更容易连贯；大跳、猛跑更容易形变（各代模型程度不同）。</li>
+        <li><strong>风格一句话说清</strong>：例如「纪实摄影自然光」「动画电影柔和色彩」，不要堆十个风格词。</li>
+        <li><strong>镜头像导演口令</strong>：景别 + 运动方式写清楚（可抄本站运镜表），少用「好看」「震撼」空词。</li>
+      </ol>
+
+      <h2 class="section-title" id="formula">通用公式（背这一条就够入门）</h2>
+      <p>把提示词想成一句短剧本 + 一句摄影指示：</p>
+      <pre class="template-block">[主体与状态] + [关键动作（含速度与方向）] + [环境/时间] + [光线与色彩气质] + [镜头/运镜] + [情绪或叙事一句]</pre>
+      <p>同一请求里，<strong>越靠前的信息越像「主命令」</strong>；后面是对画面气质与拍法的补充。</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>写什么（通俗说）</th>
+              <th>反面例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>主体与状态</td>
+              <td>谁、穿什么、大致年龄感 / 物种</td>
+              <td>「一个人」——信息太少</td>
+            </tr>
+            <tr>
+              <td>关键动作</td>
+              <td>具体动词 + 慢/中速 + 方向（从左到右、向镜头走来）</td>
+              <td>「做动作」——模型不知道做哪种</td>
+            </tr>
+            <tr>
+              <td>环境</td>
+              <td>室内/户外、大致地点、天气或时段</td>
+              <td>「很美的地方」——无法还原</td>
+            </tr>
+            <tr>
+              <td>光线与色彩</td>
+              <td>侧光、逆光、阴天柔光、暖色调夜景等</td>
+              <td>「高级」——无法映射到像素</td>
+            </tr>
+            <tr>
+              <td>镜头</td>
+              <td>景别 + 运镜（与 <a href="./camera_movement.html">运镜页</a> 对齐）</td>
+              <td>「电影感」单独出现——太空泛</td>
+            </tr>
+            <tr>
+              <td>情绪一句</td>
+              <td>孤独、期待、紧张——只选<strong>一个</strong>主情绪</td>
+              <td>又欢快又悲伤——容易糊</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title" id="best">怎样给提示词更容易出「最佳观感」</h2>
+      <p>所谓「最佳」，通常是<strong>主体清晰 + 运动可信 + 风格统一 + 没有明显穿帮</strong>。可按下面顺序自检。</p>
+
+      <h3>1. 用「要什么」代替「不要什么」</h3>
+      <p>很多视频模型对「负面提示词」不敏感或行为与绘图模型不同。与其写「不要糊、不要变形」，不如写<strong>正面画质与稳定性描述</strong>，例如：画面清晰锐利、主体轮廓稳定、运动平滑、皮肤质感自然。</p>
+
+      <h3>2. 动作写成「可排练」的指令</h3>
+      <p>把「跳舞」改成「双脚交替轻踏地面，手臂随节奏小幅摆动」；把「打斗」改成「侧身闪避，右手格挡，镜头保持中景」——越能想象排练，越容易生成连贯。</p>
+
+      <h3>3. 控制复杂度：一镜头一事</h3>
+      <p>一次生成只强调<strong>一个核心变化</strong>：要么主打运镜，要么主打人物表情，要么主打环境氛围。什么都强调等于什么都不强调。</p>
+
+      <h3>4. 先短后长、先静后动</h3>
+      <p>若产品支持短时长试跑，先用<strong>较短片段</strong>验证主体与风格，再扩展时长或做续写。静物、空镜、单人小动作往往比多人复杂互动更容易稳。</p>
+
+      <h3>5. 有参考图 / 参考视频时写清「它管什么」</h3>
+      <p>若界面支持用 <code>@</code> 或素材槽引用参考，请在提示里说明用途，例如：参考图仅锁定人物外观；参考视频仅模仿运镜节奏。具体语法以当前产品为准。</p>
+
+      <h3>6. 合规与真实人物</h3>
+      <p>勿尝试生成可识别的真实名人、侵权角色或违规内容；这既影响成功率，也可能无法通过审核。</p>
+
+      <h2 class="section-title" id="pitfalls">常见误区（对照改一句就好）</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>误区</th>
+              <th>为什么容易翻车</th>
+              <th>改法</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>堆 SD 式权重 <code>(xxx:1.4)</code></td>
+              <td>视频模型常按自然语言理解，权重语法可能无效或干扰</td>
+              <td>改成口语强调：「特写为主」「全程保持侧逆光」</td>
+            </tr>
+            <tr>
+              <td>一次写满十几种风格</td>
+              <td>风格词互相抵消，画面发灰发脏</td>
+              <td>只保留一个主风格 + 一个辅风格</td>
+            </tr>
+            <tr>
+              <td>动作又大又快又久</td>
+              <td>大幅运动更易形变、跳帧</td>
+              <td>拆成多段；每段动作幅度减半、写清「缓慢」</td>
+            </tr>
+            <tr>
+              <td>主体太多还要互动</td>
+              <td>多主体抢注意力，容易脸糊、手糊</td>
+              <td>减人数；或固定一人清晰，他人虚化/远景</td>
+            </tr>
+            <tr>
+              <td>只靠形容词</td>
+              <td>「唯美」「大片感」无法翻译为镜头</td>
+              <td>换成光线、景别、运镜、色彩的具体词</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title" id="plan">学习方案（4 周，每天约 30～45 分钟）</h2>
+      <p>目标：从「能出片」到「能稳定复现自己想要的镜头」。每周保留<strong>同一套记录习惯</strong>：提示词原文、参考素材、时长、满意点、翻车点（一句话）。</p>
+      <ol class="study-weeks">
+        <li><strong>第 1 周 · 空镜与静物</strong>：只练环境与光线，不写人物。每天 3 条，分别侧重「时间（晨/夜）」「天气」「室内窗外景」。学会用一句话定调。</li>
+        <li><strong>第 2 周 · 单人小动作</strong>：同一人物外观描述复制使用，只改动作。练习「慢速、方向、停顿时长」。对照 <a href="./camera_movement.html">运镜页</a> 加 1 种运镜词。</li>
+        <li><strong>第 3 周 · 镜头语言</strong>：固定剧情一句（如「等人」），改景别与运镜组合。每天 1 条成片 + 1 条对照实验（只改运镜或只改光线）。</li>
+        <li><strong>第 4 周 · 复盘与模板库</strong>：整理自己最稳的「开头句式」和「画质句式」，做个人模板表；尝试把一段拆成 2～3 段生成再衔接（若产品支持），体会与 <a href="./video_frame_prompts.html">视频帧技巧</a> 的关系。</li>
+      </ol>
+      <p class="muted-note">学时不必贪多：每周能沉淀 3～5 条「可复用句式」，比刷几十条无效提示更有用。</p>
+
+      <h2 class="section-title" id="templates">模板示例（可直接改括号内容）</h2>
+      <p>以下为<strong>中文自然语言示例</strong>；若你使用的版本对英文更敏感，可把镜头与风格句换成英文，主体描写保留中文亦可，以实测为准。</p>
+
+      <h3>模板 A · 人物 + 情绪 + 缓慢动作</h3>
+      <pre class="template-block">一位 [年龄/性别] 的 [职业或身份感穿着]，独自站在 [具体地点]，[缓慢的具体动作，带方向]。时间：[清晨/黄昏]，[光线描述]。镜头：[景别]，[缓慢推近/固定/横移之一]。整体情绪：[一种]。画面清晰，肤色自然，运动平滑。</pre>
+
+      <h3>模板 B · 行走 + 环境纵深</h3>
+      <pre class="template-block">从 [起点] 向 [终点] 缓慢行走，步幅不大，双臂自然摆动。场景是 [城市/林间/走廊]，背景行人虚化。日光 [柔和/侧光]，色调 [偏暖/偏冷]。镜头：中景跟拍，保持主体在画面一侧三分之一处。纪实感，稳定不抖动。</pre>
+
+      <h3>模板 C · 产品展示（静物旋转感由镜头完成）</h3>
+      <pre class="template-block">[产品名称] 置于 [材质台面]，环境极简。[慢速] 环绕运镜或缓慢推近，突出 [一个细节：logo/材质/按钮]。柔光箱效果，高光干净，阴影柔和。背景干净无杂物。画面锐利，边缘整齐。</pre>
+
+      <h3>模板 D · 对话戏（少人、信息集中）</h3>
+      <pre class="template-block">室内 [餐厅/客厅]，[两人] 坐在桌子两侧。[A] 说一句话时眼神看向 [B]，[B] 点头回应。镜头：正反打中的 [过肩/侧脸特写]，节奏舒缓。暖色灯光，浅景深，背景虚化。对白口型大致同步即可，情绪：[克制/紧张选一]。</pre>
+
+      <h3>模板 E · 风光 + 大气变化</h3>
+      <pre class="template-block">[山地/海岸/城市天际线] 远景，[云层移动/雾气缓慢流动] 可见。时间 [日出前/蓝调时刻]，色彩 [描述主色与对比]。镜头：缓慢航拍或高位固定，避免剧烈摇摆。画面通透，层次清晰。</pre>
+
+      <h3>模板 F · 夜景人像（光少而准）</h3>
+      <pre class="template-block">夜晚 [街道/窗边]，主光来自 [霓虹/路灯/室内台灯]，面部有清晰明暗过渡。人物 [站立/靠墙]，微表情 [平静/思念]。镜头：中近景，浅景深，背景光斑圆形。运动极小，以眼神变化为主。噪点控制自然，不要过曝。</pre>
+
+      <div class="example-box">
+        <h4>「最佳效果」自检清单（生成前扫一眼）</h4>
+        <ul>
+          <li>是否<strong>只有一个</strong>核心主体任务？</li>
+          <li>动作是否写得<strong>具体到动词</strong>，并带<strong>慢/中速</strong>？</li>
+          <li>风格与光线是否<strong>不超过两种</strong>主倾向？</li>
+          <li>镜头是否包含<strong>景别 + 运镜</strong>各至少一个词？</li>
+          <li>是否用正面语句写了「清晰、稳定、自然」中的至少一条？</li>
+        </ul>
+      </div>
+
+      <h2 class="section-title" id="refs">延伸阅读与官方入口</h2>
+      <ul>
+        <li><a href="https://seed.bytedance.com/en/seedance2_0" target="_blank" rel="noopener">Seedance 2.0 品牌与能力介绍（ByteDance Seed）</a></li>
+        <li><a href="https://www.volcengine.com/docs/82379/2222480" target="_blank" rel="noopener">火山引擎文档中的 Seedance 2.0 系列说明（含提示相关指引，以文档更新为准）</a></li>
+        <li>产品内测与即梦等 App 的入口与参数以<strong>当期版本</strong>为准，建议收藏官方更新说明。</li>
+      </ul>
+      <p class="muted-note">模型与政策会持续迭代：若某条技巧失效，优先以官方文档与界面提示为准，再把你的实测记录补进个人模板库。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 AI 学习中心</span>
+      <span class="sep">·</span>
+      <a href="./ai_painting_prompts.html">AI 绘画提示词</a>
+      <span class="sep">·</span>
+      <a href="./camera_movement.html">运镜提示词</a>
+      <span class="sep">·</span>
+      <a href="./video_frame_prompts.html">视频帧技巧</a>
+      <span class="sep">·</span>
+      <a href="./lapian.html">拉片学习</a>
+      <span class="sep">·</span>
+      <a href="./seedance2_prompts.html">Seedance 2.0</a>
+      <span class="sep">·</span>
+      <a href="./comfyui/tutorial.html">ComfyUI 教程</a>
+    </div>
+  </footer>
+
+  <script src="./comfyui/main.js"></script>
+</body>
+</html>
