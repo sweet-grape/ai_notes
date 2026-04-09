@@ -18,7 +18,7 @@
     const origin = window.location.origin;
     
     // Known content directories in the project
-    const knownDirs = ['comfyui', 'sdwan'];
+    const knownDirs = ['comfyui'];
     
     // Split path into segments (remove empty strings and index.html)
     const pathSegments = currentPath.split('/').filter(function(p) { 
