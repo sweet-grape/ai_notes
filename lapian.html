@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>拉片学习：导演思维与运镜思维</title>
+  <meta name="description" content="拉片入门：关键要素、通用记录表格模板、各风格片单与哔哩哔哩等平台优质拉片资源导航" />
+  <link rel="stylesheet" href="./comfyui/style.css" />
+  <style>
+    .section-title {
+      margin-top: 40px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .example-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .example-box h4 {
+      margin-top: 0;
+      color: var(--brand);
+    }
+    .tip-box {
+      background: rgba(106, 162, 255, 0.08);
+      border-left: 3px solid var(--brand);
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    .tip-box strong { color: var(--brand); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+    table th, table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    table th {
+      background: rgba(106, 162, 255, 0.1);
+      font-weight: 600;
+      color: var(--brand);
+    }
+    table tr:last-child td { border-bottom: none; }
+    .table-scroll { overflow-x: auto; margin: 16px 0; }
+    pre.template-block {
+      background: rgba(106, 162, 255, 0.08);
+      border: 1px solid rgba(106, 162, 255, 0.25);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .toc-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin: 16px 0 24px;
+      padding: 14px 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .toc-inline a { color: var(--brand); text-decoration: none; }
+    .toc-inline a:hover { text-decoration: underline; }
+    .resource-list li { margin-bottom: 8px; }
+    .muted-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI 学习中心</a>
+      <nav class="nav" id="topNav">
+        <a href="./index.html#catalog" class="nav-link" data-home-catalog>首页</a>
+        <a href="./ai_painting_prompts.html" class="nav-link">AI 绘画提示词</a>
+        <a href="./camera_movement.html" class="nav-link">运镜提示词</a>
+        <a href="./video_frame_prompts.html" class="nav-link">视频帧技巧</a>
+        <a href="./lapian.html" class="nav-link active">拉片学习</a>
+        <a href="./comfyui/tutorial.html" class="nav-link">ComfyUI 教程</a>
+        <a href="./sdwan/tutorial.html" class="nav-link">SD/Wan 教程</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="切换导航">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>拉片学习</h1>
+      <p class="subtitle">用「逐镜头拆解」训练导演思维与运镜思维，反哺 AI 视频的镜头设计与提示词</p>
+    </section>
+
+    <section class="doc">
+      <nav class="toc-inline" aria-label="本页目录">
+        <a href="#why">为何拉片</a>
+        <a href="#elements">关键要素</a>
+        <a href="#workflow">常见流程</a>
+        <a href="#tables">表格模板</a>
+        <a href="#films">风格与片单</a>
+        <a href="#platforms">平台资源</a>
+        <a href="#extra">延伸知识</a>
+      </nav>
+
+      <h2 id="why">为何要做拉片</h2>
+      <p>拉片指把影视作品按镜头或时间段「拆开来看」：画面里有什么、镜头怎么动、剪辑点为何落在这里、声音如何配合。它和本站的 <a href="./camera_movement.html">运镜提示词</a>、<a href="./video_frame_prompts.html">视频帧技巧</a> 形成闭环：你看懂别人怎样用镜头讲故事，写提示词时才敢下准指令。</p>
+      <div class="tip-box">
+        <strong>导演思维：</strong>这场戏的主题是什么？观众视线被引导到哪里？若删掉某个镜头，信息是否还成立？<br />
+        <strong>运镜思维：</strong>机位为何选这个高度与距离？运动是跟着人物情绪还是空间关系？若换成固定镜头，情绪会变吗？
+      </div>
+
+      <h2 class="section-title" id="elements">拉片关键要素（可按需勾选）</h2>
+      <p>不必每次填满；入门可先抓「景别 + 机位 + 运动 + 剪辑节奏」，熟练后再加灯光与声音。</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>看什么</th>
+              <th>可记的关键词示例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>叙事与结构</td>
+              <td>本场戏在整段情节中的功能；信息何时给观众</td>
+              <td>铺垫 / 反转 / 平行叙事 / 省略</td>
+            </tr>
+            <tr>
+              <td>场面调度</td>
+              <td>人物在空间中的位置、走位、主次关系</td>
+              <td>前后景层次、轴线、群戏站位</td>
+            </tr>
+            <tr>
+              <td>景别与构图</td>
+              <td>远全中近特；主体在画框中的位置、线条与留白</td>
+              <td>特写情绪、大远景信息、对称 / 三分法</td>
+            </tr>
+            <tr>
+              <td>运镜</td>
+              <td>推、拉、摇、移、跟、升降；速度与被摄体的关系</td>
+              <td>缓慢推进压迫感、手持呼吸感、环绕展示空间</td>
+            </tr>
+            <tr>
+              <td>剪辑</td>
+              <td>切点动机；镜头时长；匹配剪辑 / 跳跃剪辑</td>
+              <td>节奏加快 / 静接静 / 动接动</td>
+            </tr>
+            <tr>
+              <td>光影与色彩</td>
+              <td>光源方向、反差、色温；色彩是否参与叙事</td>
+              <td>侧光塑形、高反差黑白、统一调色</td>
+            </tr>
+            <tr>
+              <td>声音</td>
+              <td>对白、音乐、环境音、静音的运用</td>
+              <td>对位、渐强、突然安静</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title" id="workflow">常用拉片流程（可压缩）</h2>
+      <ol>
+        <li><strong>第一遍</strong>：不关弹幕也可，先完整感受情绪与节奏。</li>
+        <li><strong>第二遍</strong>：静音只看画面，记镜头列表与运动；再只听声音，看信息是否仍清晰。</li>
+        <li><strong>第三遍</strong>：选 1～3 分钟高潮或转场段，用下方表格做精细拆解。</li>
+      </ol>
+
+      <h2 class="section-title" id="tables">通用表格模板</h2>
+      <p>可复制到 Excel、Notion 或飞书文档。下面同时给出纯文本版，方便粘贴。</p>
+
+      <h3 id="shot-log">1. 镜头记录表（最常用）</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>镜号</th>
+              <th>时长(约)</th>
+              <th>景别</th>
+              <th>机位/角度</th>
+              <th>运镜</th>
+              <th>内容要点</th>
+              <th>剪辑/声音备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td>3s</td>
+              <td>中景</td>
+              <td>平视</td>
+              <td>固定</td>
+              <td>人物入画，建立关系</td>
+              <td>环境音铺底</td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td>…</td>
+              <td>…</td>
+              <td>…</td>
+              <td>…</td>
+              <td>…</td>
+              <td>…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pre class="template-block" title="可复制">镜号 | 时长 | 景别 | 机位/角度 | 运镜 | 画面内容 | 剪辑点/声音
+-----|------|------|-----------|------|----------|------------
+01   |      |      |           |      |          |
+02   |      |      |           |      |          |</pre>
+
+      <h3 id="scene-sheet">2. 单场戏分析表</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>项目</th>
+              <th>记录</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>戏核（这场在讲什么）</td><td></td></tr>
+            <tr><td>人物目标与阻碍</td><td></td></tr>
+            <tr><td>空间与轴线</td><td></td></tr>
+            <tr><td>情绪曲线（起承转合）</td><td></td></tr>
+            <tr><td>印象最深的一个镜头及原因</td><td></td></tr>
+            <tr><td>若自己用 AI 复现，提示词会怎么写</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="style-compare">3. 风格对照（同一元素、不同处理）</h3>
+      <pre class="template-block">片名/片段 | 风格标签 | 构图与色彩 | 运镜特点 | 剪辑节奏 | 可借鉴点
+----------|----------|------------|----------|----------|----------
+          |          |            |          |          |</pre>
+
+      <h2 class="section-title" id="films">各风格拉片片单（入门参考）</h2>
+      <p>以下侧重「镜头语言清晰、可反复暂停」的作品类型；具体版本以正版片源为准。</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>风格/训练点</th>
+              <th>可参考作品（示例）</th>
+              <th>拉片时可关注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>经典叙事与表演</td>
+              <td>《教父》《肖申克的救赎》</td>
+              <td>正反打、权力距离、省略与留白</td>
+            </tr>
+            <tr>
+              <td>摄影与光影</td>
+              <td>《银翼杀手2049》《花样年华》</td>
+              <td>景深、色温、夜景与室内光</td>
+            </tr>
+            <tr>
+              <td>动作与剪辑节奏</td>
+              <td>《谍影重重》《疯狂的麦克斯：狂暴之路》</td>
+              <td>手持、景别切换频率、空间连贯</td>
+            </tr>
+            <tr>
+              <td>长镜头与调度</td>
+              <td>《1917》《鸟人》</td>
+              <td>隐藏剪辑点、走位与摄影配合</td>
+            </tr>
+            <tr>
+              <td>动画构图与动态</td>
+              <td>《蜘蛛侠：平行宇宙》《千与千寻》</td>
+              <td>夸张透视、节奏型运镜、色彩情绪</td>
+            </tr>
+            <tr>
+              <td>纪实与观察</td>
+              <td>《地球脉动》等优质自然纪录片</td>
+              <td>等待式构图、景别与节奏变化</td>
+            </tr>
+            <tr>
+              <td>广告 / MV（短篇幅高密度）</td>
+              <td>各品牌电影感广告、强叙事 MV</td>
+              <td>几秒内需完成情绪或信息，运镜目的极其明确</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title" id="platforms">线上拉片资源与平台导航</h2>
+      <p>优先选择版权清晰、解说结构化的频道；下列为<strong>公开主页或搜索入口</strong>，便于你按关键词自行筛选高赞内容。</p>
+
+      <div class="example-box">
+        <h4>哔哩哔哩（适合系统合集与长解析）</h4>
+        <ul class="resource-list">
+          <li><a href="https://search.bilibili.com/all?keyword=%E6%8B%89%E7%89%87" target="_blank" rel="noopener">B 站搜索「拉片」</a>：按播放量、最新发布筛选，找带「逐镜」「镜头列表」标题的视频。</li>
+          <li><a href="https://space.bilibili.com/98962489" target="_blank" rel="noopener">一起拉片</a>（频道主页）：多期拆解单部影片，偏全流程视角。</li>
+          <li><a href="https://space.bilibili.com/427613894" target="_blank" rel="noopener">博然讲电影</a>：导演向解读与细节挖掘较多。</li>
+          <li><a href="https://space.bilibili.com/393170813" target="_blank" rel="noopener">中队长同志</a>：叙事与视听语言结合较紧。</li>
+          <li><a href="https://space.bilibili.com/927587" target="_blank" rel="noopener">木鱼水心</a>：系列解读与「电影史话」类长视频，适合建立整体语境后再细拉片段。</li>
+        </ul>
+        <p class="muted-note">UP 主与单条视频会更新；若某条失效，用站内搜索「片名 + 拉片」即可找到同类内容。</p>
+      </div>
+
+      <div class="example-box">
+        <h4>抖音、快手（适合短片段技巧与热点片单）</h4>
+        <ul class="resource-list">
+          <li><a href="https://www.douyin.com/search/%E7%94%B5%E5%BD%B1%E6%8B%89%E7%89%87" target="_blank" rel="noopener">抖音搜索「电影拉片」</a></li>
+          <li><a href="https://www.kuaishou.com/search/video?keyword=%E7%94%B5%E5%BD%B1%E6%8B%89%E7%89%87" target="_blank" rel="noopener">快手搜索「电影拉片」</a></li>
+        </ul>
+        <p class="muted-note">短视频适合抓「单个技巧点」；要做完整镜头列表，建议仍以长视频或自己暂停原片为主。</p>
+      </div>
+
+      <div class="example-box">
+        <h4>微信视频号</h4>
+        <p>视频号没有统一可写的站外搜索 URL。建议在微信内使用<strong>搜一搜</strong>，输入「电影拉片」「导演拉片」「镜头分析」等关键词，按账号认证情况、点赞与收藏择优关注。</p>
+      </div>
+
+      <h2 class="section-title" id="extra">延伸：拉片时可以多问自己的问题</h2>
+      <ul>
+        <li>这一场第一个镜头为什么不是特写 / 为什么偏偏是特写？</li>
+        <li>轴线有没有故意打破？打破时观众情绪怎样变化？</li>
+        <li>若把某处运动镜头改成固定镜头，信息会不会丢？</li>
+        <li>音乐进场或静音的瞬间，画面在强调什么？</li>
+        <li>对应到 AI 视频：同样的情绪，你会用哪些英文/中文运镜词与景别词组合？</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>与 AI 工作流结合：</strong>拉片表格里的「景别 + 运镜 + 光线」可直接映射到提示词；「剪辑节奏」则对应你切分片段、控制每段时长与首尾帧设计。建议每月固定拉 1～2 段经典片段并填表，比零散刷短视频更有效。
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 AI 学习中心</span>
+      <span class="sep">·</span>
+      <a href="./ai_painting_prompts.html">AI 绘画提示词</a>
+      <span class="sep">·</span>
+      <a href="./camera_movement.html">运镜提示词</a>
+      <span class="sep">·</span>
+      <a href="./video_frame_prompts.html">视频帧技巧</a>
+      <span class="sep">·</span>
+      <a href="./lapian.html">拉片学习</a>
+      <span class="sep">·</span>
+      <a href="./comfyui/tutorial.html">ComfyUI 教程</a>
+    </div>
+  </footer>
+
+  <script src="./comfyui/main.js"></script>
+</body>
+</html>
