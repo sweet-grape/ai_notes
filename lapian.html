@@ -94,6 +94,10 @@
     .list-item-note strong { color: var(--text); }
     .axis-note-wrap { margin-top: 10px; }
     .axis-note-wrap .list-item-note + .list-item-note { margin-top: 12px; }
+    .axis-note-after-list {
+      margin-top: 14px;
+      padding-top: 4px;
+    }
     .axis-diagram {
       margin: 12px 0;
       padding: 12px 14px;
@@ -363,44 +367,44 @@
       <h2 class="section-title" id="extra">延伸：拉片时可以多问自己的问题</h2>
       <ul>
         <li>这一场第一个镜头为什么不是特写 / 为什么偏偏是特写？</li>
-        <li>轴线有没有故意打破？打破时观众情绪怎样变化？
-          <div class="axis-note-wrap">
-            <p class="list-item-note"><strong>备注 · 轴线：</strong>两人（或两组）对话时，可以想象他们之间有一条看不见的直线（常叫「轴线」或 180° 规则）。摄影机通常摆在这条线的<strong>同一侧</strong>拍，观众才能一直清楚「谁在画面左边、谁在右边」，空间关系稳定。下面用<strong>俯视图</strong>（像从天花板往下看）帮助理解「未越轴」与「越轴」。</p>
-            <figure class="axis-diagram" aria-label="轴线与越轴俯视图示意">
-              <svg viewBox="0 0 520 168" xmlns="http://www.w3.org/2000/svg" role="img">
-                <title>轴线与越轴：两图均为俯视图，圆点表示人物 A、B，虚线为轴线</title>
-                <!-- 左：未越轴，机位在轴线一侧 -->
-                <text x="120" y="18" text-anchor="middle" fill="#a0a4ad" font-size="11">未越轴（机位多在同一侧）</text>
-                <circle cx="42" cy="88" r="16" fill="rgba(106,162,255,0.2)" stroke="#6aa2ff" stroke-width="2"/>
-                <text x="42" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">A</text>
-                <circle cx="198" cy="88" r="16" fill="rgba(106,162,255,0.2)" stroke="#6aa2ff" stroke-width="2"/>
-                <text x="198" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">B</text>
-                <line x1="26" y1="88" x2="214" y2="88" stroke="#a0a4ad" stroke-width="1.5" stroke-dasharray="5 4"/>
-                <text x="120" y="78" text-anchor="middle" fill="#a0a4ad" font-size="10">轴线</text>
-                <path d="M 26 88 A 86 86 0 0 1 214 88" fill="rgba(106,162,255,0.14)" stroke="#6aa2ff" stroke-width="1.2" opacity="0.95"/>
-                <polygon points="120,128 112,142 128,142" fill="#6aa2ff" opacity="0.9"/>
-                <text x="120" y="158" text-anchor="middle" fill="#6aa2ff" font-size="10">机位区（180° 内）</text>
-                <!-- 右：越轴，机位到对侧 -->
-                <text x="400" y="18" text-anchor="middle" fill="#a0a4ad" font-size="11">越轴（机位换到另一侧）</text>
-                <circle cx="322" cy="88" r="16" fill="rgba(255,140,80,0.15)" stroke="#e8a060" stroke-width="2"/>
-                <text x="322" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">A</text>
-                <circle cx="478" cy="88" r="16" fill="rgba(255,140,80,0.15)" stroke="#e8a060" stroke-width="2"/>
-                <text x="478" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">B</text>
-                <line x1="306" y1="88" x2="494" y2="88" stroke="#a0a4ad" stroke-width="1.5" stroke-dasharray="5 4"/>
-                <text x="400" y="78" text-anchor="middle" fill="#a0a4ad" font-size="10">轴线</text>
-                <path d="M 306 88 A 94 94 0 0 0 494 88" fill="rgba(255,140,80,0.12)" stroke="#e8a060" stroke-width="1.2"/>
-                <polygon points="400,48 392,62 408,62" fill="#e8a060" opacity="0.95"/>
-                <text x="400" y="38" text-anchor="middle" fill="#e8a060" font-size="10">越轴机位</text>
-              </svg>
-              <figcaption>左：机位与 A、B 同在轴线一侧的半区（蓝色扇形示意），画面上左右关系稳定。右：机位绕到轴线另一侧（橙色扇形），再拍 A、B 时，两人在画面里的左右容易<strong>对调</strong>，观众会感到空间「跳了一下」——有时是故意的情绪手段。</figcaption>
-            </figure>
-            <p class="list-item-note">若镜头突然改到线的<strong>另一侧</strong>（越轴），两人的左右位置会在画面上对调，观众往往会有一瞬间「方向乱了」的感觉。导演有时会<strong>故意</strong>越轴，用来表现争执、不安、梦境或心理失衡；有时则是配合剪辑制造一惊一乍的节奏。拉片时可以分辨：这是失误，还是刻意用「空间错位」牵动情绪。</p>
-          </div>
-        </li>
+        <li>轴线有没有故意打破？打破时观众情绪怎样变化？</li>
         <li>若把某处运动镜头改成固定镜头，信息会不会丢？</li>
         <li>音乐进场或静音的瞬间，画面在强调什么？</li>
         <li>对应到 AI 视频：同样的情绪，你会用哪些英文/中文运镜词与景别词组合？</li>
       </ul>
+
+      <div class="axis-note-wrap axis-note-after-list" id="axis-supplement">
+        <p class="list-item-note"><strong>备注 · 轴线：</strong>两人（或两组）对话时，可以想象他们之间有一条看不见的直线（常叫「轴线」或 180° 规则）。摄影机通常摆在这条线的<strong>同一侧</strong>拍，观众才能一直清楚「谁在画面左边、谁在右边」，空间关系稳定。下面用<strong>俯视图</strong>（像从天花板往下看）帮助理解「未越轴」与「越轴」。</p>
+        <figure class="axis-diagram" aria-label="轴线与越轴俯视图示意">
+          <svg viewBox="0 0 520 168" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>轴线与越轴：两图均为俯视图，圆点表示人物 A、B，虚线为轴线</title>
+            <!-- 左：未越轴，机位在轴线一侧 -->
+            <text x="120" y="18" text-anchor="middle" fill="#a0a4ad" font-size="11">未越轴（机位多在同一侧）</text>
+            <circle cx="42" cy="88" r="16" fill="rgba(106,162,255,0.2)" stroke="#6aa2ff" stroke-width="2"/>
+            <text x="42" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">A</text>
+            <circle cx="198" cy="88" r="16" fill="rgba(106,162,255,0.2)" stroke="#6aa2ff" stroke-width="2"/>
+            <text x="198" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">B</text>
+            <line x1="26" y1="88" x2="214" y2="88" stroke="#a0a4ad" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="120" y="78" text-anchor="middle" fill="#a0a4ad" font-size="10">轴线</text>
+            <path d="M 26 88 A 86 86 0 0 1 214 88" fill="rgba(106,162,255,0.14)" stroke="#6aa2ff" stroke-width="1.2" opacity="0.95"/>
+            <polygon points="120,128 112,142 128,142" fill="#6aa2ff" opacity="0.9"/>
+            <text x="120" y="158" text-anchor="middle" fill="#6aa2ff" font-size="10">机位区（180° 内）</text>
+            <!-- 右：越轴，机位到对侧 -->
+            <text x="400" y="18" text-anchor="middle" fill="#a0a4ad" font-size="11">越轴（机位换到另一侧）</text>
+            <circle cx="322" cy="88" r="16" fill="rgba(255,140,80,0.15)" stroke="#e8a060" stroke-width="2"/>
+            <text x="322" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">A</text>
+            <circle cx="478" cy="88" r="16" fill="rgba(255,140,80,0.15)" stroke="#e8a060" stroke-width="2"/>
+            <text x="478" y="93" text-anchor="middle" fill="#e8ebf0" font-size="13" font-weight="600">B</text>
+            <line x1="306" y1="88" x2="494" y2="88" stroke="#a0a4ad" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="400" y="78" text-anchor="middle" fill="#a0a4ad" font-size="10">轴线</text>
+            <path d="M 306 88 A 94 94 0 0 0 494 88" fill="rgba(255,140,80,0.12)" stroke="#e8a060" stroke-width="1.2"/>
+            <polygon points="400,48 392,62 408,62" fill="#e8a060" opacity="0.95"/>
+            <text x="400" y="38" text-anchor="middle" fill="#e8a060" font-size="10">越轴机位</text>
+          </svg>
+          <figcaption>左：机位与 A、B 同在轴线一侧的半区（蓝色扇形示意），画面上左右关系稳定。右：机位绕到轴线另一侧（橙色扇形），再拍 A、B 时，两人在画面里的左右容易<strong>对调</strong>，观众会感到空间「跳了一下」——有时是故意的情绪手段。</figcaption>
+        </figure>
+        <p class="list-item-note">若镜头突然改到线的<strong>另一侧</strong>（越轴），两人的左右位置会在画面上对调，观众往往会有一瞬间「方向乱了」的感觉。导演有时会<strong>故意</strong>越轴，用来表现争执、不安、梦境或心理失衡；有时则是配合剪辑制造一惊一乍的节奏。拉片时可以分辨：这是失误，还是刻意用「空间错位」牵动情绪。</p>
+      </div>
 
       <div class="tip-box">
         <strong>与 AI 工作流结合：</strong>拉片表格里的「景别 + 运镜 + 光线」可直接映射到提示词；「剪辑节奏」则对应你切分片段、控制每段时长与首尾帧设计。建议每月固定拉 1～2 段经典片段并填表，比零碎浏览碎片内容更有效。
